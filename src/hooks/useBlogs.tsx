@@ -42,6 +42,17 @@ export function useGetBlogs(params: BlogsParams) {
   });
 }
 
+export function useGetBlog(id: string) {
+  return useQuery({
+    queryKey: ["blog", id],
+    queryFn: async () => {
+      const res = await axiosApi.get(`/blogs/${id}`);
+      return res.data;
+    },
+    enabled: !!id,
+  });
+}
+
 /**
  * POST: Add Blog
  */

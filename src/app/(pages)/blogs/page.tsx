@@ -15,7 +15,7 @@ export default function Blogs() {
   const { currentUser } = useUserData();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const limit = 6;
+  const limit = 12;
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -10,7 +10,7 @@ import { MdOutlinePayment } from "react-icons/md";
 export const sidebarLinks = [
   { name: "Home", href: "/dashboard", icon: <FaHome /> },
   { name: "Profile", href: "/dashboard/profile", icon: <FaUser /> },
-  { name: "Favorites", href: "/dashboard/favourites", icon: <FaHeart /> },
+  { name: "Favourites", href: "/dashboard/Favourites", icon: <FaHeart /> },
   { name: "Carts", href: "/dashboard/carts", icon: <FaShoppingBasket /> },
   { name: "Transactions", href: "/dashboard/transactions", icon: <MdOutlinePayment /> },
   { name: "Edit Profile", href: "/dashboard/edit-profile", icon: <FaUserEdit /> },

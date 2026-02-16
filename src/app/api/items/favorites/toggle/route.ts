@@ -8,17 +8,21 @@ export async function POST(request: Request) {
     const { productId } = await request.json();
 
     if (!productId) {
-      return NextResponse.json({ error: "productId is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "productId is required" },
+        { status: 400 },
+      );
     }
 
     const users = await getUsersCollection();
     const user = await users.findOne({ email });
-    if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+    if (!user)
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    const isFavourite = user.favorites?.includes(productId);
+    const isFavourite = user.Favourites?.includes(productId);
     const update = isFavourite
-      ? { $pull: { favorites: productId } }
-      : { $addToSet: { favorites: productId } };
+      ? { $pull: { Favourites: productId } }
+      : { $addToSet: { Favourites: productId } };
 
     await users.updateOne({ email }, update);
 
@@ -27,7 +31,10 @@ export async function POST(request: Request) {
       action: isFavourite ? "removed" : "added",
     });
   } catch (error) {
-    console.error("Error toggling favorite:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    console.error("Error toggling Favourite:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

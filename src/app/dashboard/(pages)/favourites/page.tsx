@@ -9,8 +9,8 @@ import { LuLoader } from "react-icons/lu";
 import { TbAlertTriangle } from "react-icons/tb";
 import { FcInfo, FcPackage } from "react-icons/fc";
 
-export default function FavoritesTable() {
-  const { data: favorites, isLoading, isError } = useFavourites();
+export default function FavouritesTable() {
+  const { data: Favourites, isLoading, isError } = useFavourites();
 
   // =========================
   // 🌀 Loading State
@@ -19,7 +19,7 @@ export default function FavoritesTable() {
     return (
       <div className="flex flex-col justify-center items-center py-16 text-base-content/50">
         <LuLoader className="animate-spin text-4xl mb-3 text-primary" />
-        <p className="text-lg font-medium">Loading your favorites...</p>
+        <p className="text-lg font-medium">Loading your Favourites...</p>
       </div>
     );
 
@@ -30,19 +30,19 @@ export default function FavoritesTable() {
     return (
       <div className="flex flex-col justify-center items-center py-16 text-red-500">
         <TbAlertTriangle className="text-5xl mb-3" />
-        <p className="text-lg font-medium">Failed to load favorites.</p>
+        <p className="text-lg font-medium">Failed to load Favourites.</p>
       </div>
     );
 
   // =========================
   // 📦 Empty State
   // =========================
-  if (!favorites || favorites.length === 0)
+  if (!Favourites || Favourites.length === 0)
     return (
       <div className="flex flex-col items-center justify-center py-20 text-base-content/50">
         <FcPackage className="text-6xl mb-3 opacity-50" />
         <p className="text-lg font-medium">
-          You haven’t added any favorites yet.
+          You haven’t added any Favourites yet.
         </p>
         <p className="text-sm text-base-content/40 mt-1">
           Browse products and tap the ♥ icon to save them here.
@@ -68,7 +68,7 @@ export default function FavoritesTable() {
           </thead>
 
           <tbody>
-            {favorites.map((product) => (
+            {Favourites.map((product) => (
               <tr
                 key={product._id}
                 className="border-t border-base-content/5 hover:bg-base-200/50 transition-colors duration-150"
@@ -106,7 +106,7 @@ export default function FavoritesTable() {
                       <FcInfo size={16} />
                     </Link>
 
-                    {/* Remove Favorite */}
+                    {/* Remove Favourite */}
                     <AddToFavourite productId={product._id as string} />
                   </div>
                 </td>
@@ -117,7 +117,7 @@ export default function FavoritesTable() {
 
         {/* Mobile Card Layout */}
         <div className="md:hidden divide-y divide-base-content/10">
-          {favorites.map((product) => (
+          {Favourites.map((product) => (
             <div
               key={product._id}
               className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 hover:bg-base-200/50 transition"

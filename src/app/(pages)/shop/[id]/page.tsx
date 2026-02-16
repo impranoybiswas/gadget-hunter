@@ -8,9 +8,9 @@ import Image from "next/image";
 import Loading from "@/app/loading";
 import Container from "@/ui/Container";
 import Section from "@/ui/Section";
-import ToggleToFavourite from "@/components/FavouriteButton";
 import CartButton from "@/components/CartButton";
 import { FaShoppingCart } from "react-icons/fa";
+import FavouriteButton from "@/components/FavouriteButton";
 
 /**
  * =========================================================
@@ -133,7 +133,7 @@ export default function ProductDetailPage() {
               <span className="font-medium text-base-content/70 text-sm group-hover:text-error transition-colors">
                 Add to Favourite
               </span>
-              <ToggleToFavourite productId={product._id as string} />
+              <FavouriteButton productId={product._id as string} />
             </div>
 
             {/* Add to Cart */}

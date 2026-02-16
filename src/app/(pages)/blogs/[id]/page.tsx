@@ -96,7 +96,7 @@ export default function SingleBlogPage() {
                         </h1>
 
                         <div className="flex items-center gap-4">
-                            <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden border-2 border-base-100 shadow-lg">
+                            <div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden border-2 border-base-100 shadow-lg relative">
                                 {authorUser?.image ? (
                                     <Image
                                         src={authorUser.image}

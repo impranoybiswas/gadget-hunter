@@ -3,6 +3,7 @@
 import { useToggleCart } from "@/hooks/useFavCarts";
 import { useUserData } from "@/hooks/useUserData";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { LuLoader } from "react-icons/lu";
 
@@ -37,7 +38,7 @@ export default function CartButton({
 
   const updateCart = (nextQty: number) => {
     if (!currentUser?.email) {
-      alert("Please log in to add items to your cart.");
+      toast.error("Please log in to add items to your cart.");
       return;
     }
     if (nextQty < 0 || nextQty > maxQuantity) return;

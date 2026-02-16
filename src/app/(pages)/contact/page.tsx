@@ -6,6 +6,7 @@ import Button from "@/ui/Button";
 import React, { useState } from "react";
 import { FaEnvelope, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa6";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -16,7 +17,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Your message has been sent successfully!");
+    toast.success("Your message has been sent successfully!");
     setForm({ name: "", email: "", message: "" });
   };
 

@@ -2,6 +2,7 @@
 
 import { useGetItem, useUpdateItem } from "@/hooks/useItems";
 import React from "react";
+import toast from "react-hot-toast";
 
 export default function ProductEdit({ params }: { params: { id: string } }) {
   const id = params.id;
@@ -25,7 +26,7 @@ export default function ProductEdit({ params }: { params: { id: string } }) {
 
     // Ensure required fields are valid
     if (!name || isNaN(price)) {
-      alert("Please provide valid name and price.");
+      toast.error("Please provide valid name and price.");
       return;
     }
 
@@ -34,10 +35,10 @@ export default function ProductEdit({ params }: { params: { id: string } }) {
       { _id: id, name, price },
       {
         onSuccess: () => {
-          alert("✅ Product updated successfully!");
+          toast.success("✅ Product updated successfully!");
         },
         onError: () => {
-          alert("❌ Failed to update product. Please try again.");
+          toast.error("❌ Failed to update product. Please try again.");
         },
       }
     );

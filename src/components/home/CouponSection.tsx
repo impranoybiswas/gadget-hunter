@@ -4,6 +4,7 @@ import Section from "@/ui/Section";
 import { FaCopy, FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 const coupons = [
   { code: "SAVE10", discount: "10%", desc: "Get 10% off on all mobiles" },
@@ -43,7 +44,7 @@ export default function CouponSection() {
       }
     } catch (err) {
       console.error("Clipboard copy failed:", err);
-      alert("Failed to copy the coupon code. Please try manually.");
+      toast.error("Failed to copy the coupon code. Please try manually.");
     }
   };
 

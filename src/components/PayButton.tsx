@@ -4,6 +4,7 @@ import { useUserData } from "@/hooks/useUserData";
 import { Product } from "@/types/product";
 import Button from "@/ui/Button";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export function PayButton({ cartTotal, selectedProducts }: { cartTotal: number, selectedProducts: Product[] }) {
   const [loading, setLoading] = useState(false);
@@ -41,11 +42,11 @@ export function PayButton({ cartTotal, selectedProducts }: { cartTotal: number, 
         window.location.href = data.GatewayPageURL;
         console.log("Redirecting to payment gateway...");
       } else {
-        alert("Payment initiation failed!");
+        toast.error("Payment initiation failed!");
       }
     } catch (err) {
       console.error("Payment initiation error:", err);
-      alert("Error initiating payment. Please try again.");
+      toast.error("Error initiating payment. Please try again.");
     } finally {
       setLoading(false);
     }

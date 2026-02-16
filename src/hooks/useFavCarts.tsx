@@ -5,13 +5,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 /** =========================
- * ✅ Fetch all favorite products for the current user
+ * ✅ Fetch all Favourite products for the current user
  ========================= */
 export const useFavourites = () => {
   return useQuery<Product[], Error>({
-    queryKey: ["favourites"], // React Query cache key
+    queryKey: ["Favourites"], // React Query cache key
     queryFn: async () => {
-      const response = await axiosApi.get("/items/favorites/all");
+      const response = await axiosApi.get("/items/Favourites/all");
       return response.data.items as Product[];
     },
     refetchInterval: 1000, // auto refresh
@@ -21,9 +21,9 @@ export const useFavourites = () => {
 };
 
 /** =========================
- * ✅ Toggle a product in favorites (add/remove)
+ * ✅ Toggle a product in Favourites (add/remove)
  ========================= */
-export function useToggleFavorite() {
+export function useToggleFavourite() {
   const queryClient = useQueryClient();
 
   return useMutation<
@@ -32,21 +32,21 @@ export function useToggleFavorite() {
     string
   >({
     mutationFn: async (productId: string) => {
-      const res = await axiosApi.post("/items/favorites/toggle", { productId });
+      const res = await axiosApi.post("/items/Favourites/toggle", { productId });
       return res.data;
     },
     onSuccess: (data) => {
       // Show toast depending on action
       toast.success(
         data.action === "added"
-          ? "Added to favorites!"
-          : "Removed from favorites!"
+          ? "Added to Favourites!"
+          : "Removed from Favourites!"
       );
-      // Refresh favourites query so UI updates
-      queryClient.invalidateQueries({ queryKey: ["favourites"] });
+      // Refresh Favourites query so UI updates
+      queryClient.invalidateQueries({ queryKey: ["Favourites"] });
     },
     onError: () => {
-      toast.error("Failed to update favorites!");
+      toast.error("Failed to update Favourites!");
     },
   });
 }

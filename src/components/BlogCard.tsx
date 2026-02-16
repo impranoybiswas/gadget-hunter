@@ -91,7 +91,7 @@ export default function BlogCard({ blog, onEdit, isLoading }: BlogCardProps) {
       {/* Footer Info */}
       <div className="pt-6 border-t border-base-content/5 flex items-center justify-between text-xs font-medium text-base-content/60 relative z-10 pointer-events-none">
         <div className="flex items-center gap-2">
-          <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden">
+          <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary overflow-hidden relative">
             {authorUser?.image ? (
               <Image src={authorUser.image} alt={authorUser.name} fill className="size-full object-cover" />
             ) : (

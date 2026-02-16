@@ -1,8 +1,9 @@
 "use client";
 
-import { useToggleFavorite } from "@/hooks/useFavCarts";
+import { useToggleFavourite } from "@/hooks/useFavCarts";
 import { useUserData } from "@/hooks/useUserData";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 
 interface FavouriteButtonProps {
@@ -12,24 +13,24 @@ interface FavouriteButtonProps {
 export default function FavouriteButton({ productId }: FavouriteButtonProps) {
   const { currentUser, isLoading: userLoading } = useUserData();
   const [isFavourite, setIsFavourite] = useState(false);
-  const toggleFavorite = useToggleFavorite();
+  const toggleFavourite = useToggleFavourite();
 
   // Sync local state with user data
   useEffect(() => {
-    if (currentUser?.favorites) {
-      setIsFavourite(currentUser.favorites.includes(productId));
+    if (currentUser?.Favourites) {
+      setIsFavourite(currentUser.Favourites.includes(productId));
     }
-  }, [currentUser?.favorites, productId]);
+  }, [currentUser?.Favourites, productId]);
 
   // Handle click
   const handleToggle = () => {
     if (!currentUser?.email) {
       // Optional: show toast or alert
-      alert("Please log in to save favorites.");
+      toast.error("Please log in to save Favourites.");
       return;
     }
 
-    toggleFavorite.mutate(productId, {
+    toggleFavourite.mutate(productId, {
       onSuccess: () => {
         // Optimistic update (instant feedback)
         setIsFavourite((prev) => !prev);

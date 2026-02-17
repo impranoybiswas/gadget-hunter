@@ -1,10 +1,10 @@
 import { useGetItems } from "@/hooks/useItems";
-import { useCarts, usefavorites } from "./useFavCarts";
+import { useCarts, useFavorites } from "./useFavCarts";
 
 export function useStatesNumber() {
   const { data: items } = useGetItems(1, "", "", "", true);
   const { data: carts = [] } = useCarts();
-  const { data: favorites } = usefavorites();
+  const { data: favorites } = useFavorites();
 
   const allCategories = items?.items.map((p) => p.category);
   const totalCategories = [...new Set(allCategories)].length;

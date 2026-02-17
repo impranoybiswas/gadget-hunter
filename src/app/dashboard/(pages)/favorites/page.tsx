@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usefavorites } from "@/hooks/useFavCarts";
+import { useavorites } from "@/hooks/useFavCarts";
 import AddToFavourite from "@/components/FavouriteButton";
 import { LuLoader } from "react-icons/lu";
 import { TbAlertTriangle } from "react-icons/tb";

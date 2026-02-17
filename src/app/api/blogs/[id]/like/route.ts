@@ -6,10 +6,10 @@ import { Blog } from "@/types/blog";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
-    const { id } = params;
+    const { id } = await context.params;
     const sessionResult = await getSessionUser();
 
     if (sessionResult.error) {
@@ -38,7 +38,7 @@ export async function PATCH(
     await collection.updateOne({ _id: new ObjectId(id) }, update);
 
     return NextResponse.json({
-      message: isLiked ? "Unliked" : "Liked",
+      message: isLiked ? "Uniked" : "Liked",
       isLiked: !isLiked,
     });
   } catch (error) {

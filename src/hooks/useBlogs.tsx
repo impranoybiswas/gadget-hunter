@@ -115,3 +115,24 @@ export function useDeleteBlog() {
     },
   });
 }
+
+/**
+ * PATCH: Like/Unlike Blog
+ */
+export function useLikeBlog() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const res = await axiosApi.patch(`/blogs/${id}/like`);
+      return res.data;
+    },
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({ queryKey: ["blog", id] });
+    },
+    onError: (error: { response?: { data?: { message?: string } } }) => {
+      const message = error.response?.data?.message || "Something went wrong";
+      toast.error(message);
+    },
+  });
+}

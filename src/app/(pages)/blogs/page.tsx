@@ -110,7 +110,7 @@ export default function Blogs() {
               className="group relative cursor-pointer h-full"
             >
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-secondary/50 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-              <div className="relative h-full bg-base-100 border-2 border-dashed border-base-content/10 rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-4 group-hover:border-primary/30 transition-colors bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#333_1px,transparent_1px)]">
+              <div className="relative h-full bg-base-100 border border-base-content/10 rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-4 group-hover:border-primary/30 transition-colors bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] dark:bg-[radial-gradient(#333_1px,transparent_1px)]">
                 <div className="size-16 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-content transition-all duration-300">
                   <FaPlus size={24} className="group-hover:rotate-90 transition-transform duration-500" />
                 </div>

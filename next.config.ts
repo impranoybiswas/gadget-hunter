@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-
   images: {
     remotePatterns: [
       {
@@ -56,6 +54,18 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        protocol: "https",
+        hostname: "seeklogo.com",
+      },
+      {
+        protocol: "https",
+        hostname: "1000logos.net",
       },
     ],
   },

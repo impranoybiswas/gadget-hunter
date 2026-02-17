@@ -3,6 +3,7 @@ export interface Blog {
   title: string;
   content: string;
   author: string; // user email
+  likers?: string[];
   createdAt: string;
   updatedAt?: string;
 }

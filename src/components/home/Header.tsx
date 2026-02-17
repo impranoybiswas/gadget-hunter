@@ -19,6 +19,9 @@ export default function Header() {
   const sideData: BannerItem[] =
     isLoading || isError ? [] : bannerData?.slice(3, 7) || [];
 
+  const brandLogos = Array.from({ length: 12 }, (_, i) => i + 1);
+
+
   return (
     <header className="w-full space-y-6">
       {/* Main Banner Section */}
@@ -99,19 +102,24 @@ export default function Header() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-base-100 rounded-lg border border-primary/20 shadow-sm h-16 flex items-center overflow-hidden"
+        className="bg-base-100 h-8 md:h-10 flex items-center overflow-hidden my-2"
       >
-        <Marquee speed={50} gradient={false}>
-          <div className="flex items-center justify-center gap-10 px-10">
-            <Image
-              src="/assets/brand_title.png"
-              alt="brand logos"
-              width={1000}
-              height={1000}
-              className="h-10 md:h-12 w-auto object-contain dark:invert"
-            />
+        <span className="w-[2px] h-full bg-gradient-to-b from-transparent via-base-300 to-transparent" />
+        <Marquee speed={40} gradient={false} autoFill>
+          <div className="flex items-center justify-center gap-6 px-3">
+            {brandLogos.map((i, index) => (
+              <Image
+                key={index}
+                src={`/assets/brands/logo-${i}.png`}
+                alt={`logo-${i}`}
+                width={500}
+                height={500}
+                className="h-4 md:h-6 w-auto object-contain dark:invert"
+              />
+            ))}
           </div>
         </Marquee>
+        <span className="w-[2px] h-full bg-gradient-to-b from-transparent via-base-300 to-transparent" />
       </motion.div>
     </header>
   );

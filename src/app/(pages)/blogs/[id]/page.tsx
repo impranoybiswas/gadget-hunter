@@ -10,6 +10,7 @@ import Skeleton from "@/ui/Skeleton";
 import { FaArrowLeft, FaRegCalendarAlt, FaUser } from "react-icons/fa";
 import { useUserByEmail } from "@/hooks/useUserByEmail";
 import Image from "next/image";
+import BlogLikeButton from "@/components/BlogLikeButton";
 
 export default function SingleBlogPage() {
     const params = useParams();
@@ -91,7 +92,7 @@ export default function SingleBlogPage() {
                             </span>
                         </div>
 
-                        <h1 className="text-3xl md:text-5xl font-extrabold leading-tight text-base-content">
+                        <h1 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight text-base-content">
                             {blog.title}
                         </h1>
 
@@ -120,12 +121,14 @@ export default function SingleBlogPage() {
                     </div>
                 </article>
 
-                {/* Interaction Section (Optional: Comments, etc. could go here) */}
+                {/* Interaction Section */}
                 <div className="mt-12 pt-8 border-t border-base-content/10 flex justify-between items-center">
+                    <div className="flex items-center gap-6">
+                        <BlogLikeButton blogId={blog._id} likers={blog.likers} />
+                    </div>
                     <p className="text-base-content/50 italic">
                         Thanks for reading!
                     </p>
-                    {/* Share buttons could go here */}
                 </div>
             </Section>
         </Container>

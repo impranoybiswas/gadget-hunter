@@ -10,7 +10,7 @@ import axios from "axios";
  * from the database and updates the global theme context.
  */
 export default function ThemeSync() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const context = useContext(ThemeContext);
 
     useEffect(() => {

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 /** =========================
  * ✅ Fetch all Favourite products for the current user
  ========================= */
-export const usefavorites = () => {
+export const useFavorites = () => {
   return useQuery<Product[], Error>({
     queryKey: ["favorites"], // React Query cache key
     queryFn: async () => {

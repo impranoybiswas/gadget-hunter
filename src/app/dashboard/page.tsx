@@ -31,7 +31,7 @@ const formatNumber = (num: number) => {
 };
 
 export default function DashboardHome() {
-  const { totalProducts, totalCarts, totalfavorites, totalCategories } =
+  const { totalProducts, totalCarts, totalFavorites, totalCategories } =
     useStatesNumber();
 
   /** =========================
@@ -40,7 +40,7 @@ export default function DashboardHome() {
   const pieData = [
     { name: "Products", value: totalProducts },
     { name: "Carts", value: totalCarts },
-    { name: "favorites", value: totalfavorites },
+    { name: "favorites", value: totalFavorites },
   ];
   const pieColors = ["#4f46e5", "#16a34a", "#e11d48"];
 
@@ -73,7 +73,7 @@ export default function DashboardHome() {
     },
     {
       name: "favorites",
-      value: totalfavorites,
+      value: totalFavorites,
       icon: <FaHeart size={26} />,
       color: "bg-pink-100 text-pink-600",
       growth: "+5%",

@@ -3,14 +3,15 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useavorites } from "@/hooks/useFavCarts";
+
 import AddToFavourite from "@/components/FavouriteButton";
 import { LuLoader } from "react-icons/lu";
 import { TbAlertTriangle } from "react-icons/tb";
 import { FcInfo, FcPackage } from "react-icons/fc";
+import { useFavorites } from "@/hooks/useFavCarts";
 
-export default function favoritesTable() {
-  const { data: favorites, isLoading, isError } = usefavorites();
+export default function FavoritesTable() {
+  const { data: favorites, isLoading, isError } = useFavorites();
 
   // =========================
   // 🌀 Loading State

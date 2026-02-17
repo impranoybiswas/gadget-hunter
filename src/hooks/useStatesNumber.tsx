@@ -11,7 +11,7 @@ export function useStatesNumber() {
 
   const totalProducts = items?.items?.length || 0;
   const totalCarts = carts?.length || 0;
-  const totalfavorites = favorites?.length || 0;
+  const totalFavorites = favorites?.length || 0;
 
-  return { totalProducts, totalCarts, totalfavorites, totalCategories };
+  return { totalProducts, totalCarts, totalFavorites, totalCategories };
 }

@@ -1,11 +1,8 @@
 import { getUsersCollection } from "@/libs/collection";
-import { getSessionUser } from "@/libs/getSessionUser";
 import { NextRequest, NextResponse } from "next/server";
 
 //Get User by Email
 export async function GET(req: NextRequest) {
-  const { error } = await getSessionUser();
-  if (error) return error;
   try {
     const url = new URL(req.url);
     const email = url.searchParams.get("email");
@@ -15,7 +12,11 @@ export async function GET(req: NextRequest) {
     }
 
     const users = await getUsersCollection();
-    const user = await users.findOne({ email });
+    // Publicly accessible but limited to non-sensitive fields
+    const user = await users.findOne(
+      { email },
+      { projection: { name: 1, image: 1, role: 1 } },
+    );
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

@@ -131,7 +131,7 @@ export default function ProductDetailPage() {
             {/* Favourite Button */}
             <div className="flex items-center justify-center gap-3 w-full sm:w-auto border border-error/20 bg-error/5 hover:bg-error/10 transition-all duration-300 px-5 py-2.5 rounded-lg shadow-sm cursor-pointer group">
               <span className="font-medium text-base-content/70 text-sm group-hover:text-error transition-colors">
-                Add to Favourite
+                Add to favorites
               </span>
               <FavouriteButton productId={product._id as string} />
             </div>

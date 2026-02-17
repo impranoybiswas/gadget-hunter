@@ -17,25 +17,26 @@ export async function GET() {
 
     const user = await users.findOne({ email });
 
-    if (!user?.Favourites?.length) {
+    // Standardized to lowercase 'favorites'
+    if (!user?.favorites?.length) {
       return NextResponse.json({ items: [] });
     }
 
-    const FavouriteIds = user.Favourites.filter((id: string) =>
-      ObjectId.isValid(id),
-    ).map((id: string) => new ObjectId(id));
+    const favouriteIds = user.favorites
+      .filter((id: string) => ObjectId.isValid(id))
+      .map((id: string) => new ObjectId(id));
 
-    if (!FavouriteIds.length) {
+    if (!favouriteIds.length) {
       return NextResponse.json({ items: [] });
     }
 
-    const FavouriteProducts = await products
-      .find({ _id: { $in: FavouriteIds } })
+    const favouriteProducts = await products
+      .find({ _id: { $in: favouriteIds } })
       .toArray();
 
-    return NextResponse.json({ items: FavouriteProducts });
+    return NextResponse.json({ items: favouriteProducts });
   } catch (error) {
-    console.error("Error fetching Favourites:", error);
+    console.error("Error fetching favorites:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

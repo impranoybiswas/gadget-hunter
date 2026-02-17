@@ -8,9 +8,11 @@ export interface Blog {
 }
 
 export interface BlogResponse {
-  success: boolean;
   data: Blog[];
-  total: number;
-  page: number;
-  totalPages: number;
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
 }

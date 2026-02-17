@@ -13,6 +13,6 @@ export interface DBUser extends Document {
   role: string;
   createdAt: string;
   lastSignInAt?: string;
-  Favourites: string[];
+  favorites: string[];
   carts: CartItem[];
 }

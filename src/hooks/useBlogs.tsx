@@ -24,7 +24,7 @@ interface BlogsParams {
 
 export const fetchBlogs = async ({
   page = 1,
-  limit = 10,
+  limit = 9,
   search = "",
 }: BlogsParams): Promise<BlogResponse> => {
   const res = await axiosApi.get("/blogs", {

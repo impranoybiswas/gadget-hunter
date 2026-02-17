@@ -7,11 +7,11 @@ import toast from "react-hot-toast";
 /** =========================
  * ✅ Fetch all Favourite products for the current user
  ========================= */
-export const useFavourites = () => {
+export const usefavorites = () => {
   return useQuery<Product[], Error>({
-    queryKey: ["Favourites"], // React Query cache key
+    queryKey: ["favorites"], // React Query cache key
     queryFn: async () => {
-      const response = await axiosApi.get("/items/Favourites/all");
+      const response = await axiosApi.get("/items/favorites/all");
       return response.data.items as Product[];
     },
     refetchInterval: 1000, // auto refresh
@@ -21,7 +21,7 @@ export const useFavourites = () => {
 };
 
 /** =========================
- * ✅ Toggle a product in Favourites (add/remove)
+ * ✅ Toggle a product in favorites (add/remove)
  ========================= */
 export function useToggleFavourite() {
   const queryClient = useQueryClient();
@@ -32,21 +32,21 @@ export function useToggleFavourite() {
     string
   >({
     mutationFn: async (productId: string) => {
-      const res = await axiosApi.post("/items/Favourites/toggle", { productId });
+      const res = await axiosApi.post("/items/favorites/toggle", { productId });
       return res.data;
     },
     onSuccess: (data) => {
       // Show toast depending on action
       toast.success(
         data.action === "added"
-          ? "Added to Favourites!"
-          : "Removed from Favourites!"
+          ? "Added to favorites!"
+          : "Removed from favorites!"
       );
-      // Refresh Favourites query so UI updates
-      queryClient.invalidateQueries({ queryKey: ["Favourites"] });
+      // Refresh favorites query so UI updates
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
     },
     onError: () => {
-      toast.error("Failed to update Favourites!");
+      toast.error("Failed to update favorites!");
     },
   });
 }

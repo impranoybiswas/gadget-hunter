@@ -15,24 +15,20 @@ export default function FavouriteButton({ productId }: FavouriteButtonProps) {
   const [isFavourite, setIsFavourite] = useState(false);
   const toggleFavourite = useToggleFavourite();
 
-  // Sync local state with user data
   useEffect(() => {
-    if (currentUser?.Favourites) {
-      setIsFavourite(currentUser.Favourites.includes(productId));
+    if (currentUser?.favorites) {
+      setIsFavourite(currentUser.favorites.includes(productId));
     }
-  }, [currentUser?.Favourites, productId]);
+  }, [currentUser?.favorites, productId]);
 
-  // Handle click
   const handleToggle = () => {
     if (!currentUser?.email) {
-      // Optional: show toast or alert
-      toast.error("Please log in to save Favourites.");
+      toast.error("Please log in to save favorites.");
       return;
     }
 
     toggleFavourite.mutate(productId, {
       onSuccess: () => {
-        // Optimistic update (instant feedback)
         setIsFavourite((prev) => !prev);
       },
     });

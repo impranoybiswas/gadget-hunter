@@ -19,10 +19,11 @@ export async function POST(request: Request) {
     if (!user)
       return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-    const isFavourite = user.Favourites?.includes(productId);
+    // Standardized to lowercase 'favorites'
+    const isFavourite = user.favorites?.includes(productId);
     const update = isFavourite
-      ? { $pull: { Favourites: productId } }
-      : { $addToSet: { Favourites: productId } };
+      ? { $pull: { favorites: productId } }
+      : { $addToSet: { favorites: productId } };
 
     await users.updateOne({ email }, update);
 
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
       action: isFavourite ? "removed" : "added",
     });
   } catch (error) {
-    console.error("Error toggling Favourite:", error);
+    console.error("Error toggling favourite:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

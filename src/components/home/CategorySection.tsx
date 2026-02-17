@@ -14,7 +14,7 @@ import {
 const categories = [
   { name: "Mobile", icon: <FaMobileScreen /> },
   { name: "Laptop", icon: <FaLaptop /> },
-  { name: "Smartwatch", icon: <IoWatchOutline /> },
+  { name: "Smart Watch", icon: <IoWatchOutline /> },
   { name: "Monitor", icon: <FaTv /> },
   { name: "Headphone", icon: <FaHeadphones /> },
   { name: "Tablet", icon: <FaTabletScreenButton /> },

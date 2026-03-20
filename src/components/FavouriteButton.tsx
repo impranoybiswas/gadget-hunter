@@ -18,12 +18,31 @@ export default function FavouriteButton({ productId }: FavouriteButtonProps) {
   useEffect(() => {
     if (currentUser?.favorites) {
       setIsFavourite(currentUser.favorites.includes(productId));
+    } else {
+      const localFavs = JSON.parse(
+        localStorage.getItem("local_favorites") || "[]",
+      );
+      setIsFavourite(localFavs.includes(productId));
     }
   }, [currentUser?.favorites, productId]);
 
-  const handleToggle = () => {
+  function handleToggle() {
     if (!currentUser?.email) {
-      toast.error("Please log in to save favorites.");
+      const localFavs = JSON.parse(
+        localStorage.getItem("local_favorites") || "[]",
+      );
+
+      if (localFavs.includes(productId)) {
+        const updatedFavs = localFavs.filter((id: string) => id !== productId);
+        localStorage.setItem("local_favorites", JSON.stringify(updatedFavs));
+        setIsFavourite(false);
+        toast.success("Removed from favorites");
+      } else {
+        localFavs.push(productId);
+        localStorage.setItem("local_favorites", JSON.stringify(localFavs));
+        setIsFavourite(true);
+        toast.success("Added to favorites");
+      }
       return;
     }
 
@@ -32,7 +51,7 @@ export default function FavouriteButton({ productId }: FavouriteButtonProps) {
         setIsFavourite((prev) => !prev);
       },
     });
-  };
+  }
 
   if (userLoading)
     return (

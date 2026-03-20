@@ -3,7 +3,6 @@ import { useGetItems } from "@/hooks/useItems";
 import Section from "@/ui/Section";
 import Image from "next/image";
 import Link from "next/link";
-import { TbCurrencyTaka } from "react-icons/tb";
 import { motion } from "framer-motion";
 import FavouriteButton from "../FavouriteButton";
 
@@ -19,13 +18,13 @@ export default function FeaturedProductSection() {
       </Section>
     );
 
-  const products = data?.items.slice(0, 8) || [];
+  const products = data?.items.slice(0, 15) || [];
 
   return (
     <Section
       title="Featured Products"
       subtitle="Top picks curated for you"
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"
+      className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"
     >
       {products.map((p, index) => (
         <motion.div
@@ -33,7 +32,7 @@ export default function FeaturedProductSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.05, duration: 0.4 }}
-          className="group relative rounded-2xl overflow-hidden border border-base-content/10 bg-base-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
+          className="group relative rounded-md overflow-hidden border border-base-content/10 bg-base-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
         >
           {/* Image */}
           <div className="relative w-full aspect-square overflow-hidden bg-base-200">
@@ -65,8 +64,7 @@ export default function FeaturedProductSection() {
               {p.name}
             </h3>
             <div className="flex items-center gap-1 text-primary font-semibold mt-2">
-              <TbCurrencyTaka size={18} />
-              <span className="text-sm md:text-base">{p.price}</span>
+              <span className="text-base md:text-xl">{"BDT "+p.price}</span>
             </div>
           </div>
 

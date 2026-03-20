@@ -12,6 +12,7 @@ import ScrollProvider from "@/providers/ScrollProvider";
 import GoToTop from "@/components/GoToTop";
 
 import ThemeSync from "@/components/ThemeSync";
+import FavoriteSync from "@/components/FavoriteSync";
 
 export default function CoustomLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -23,6 +24,7 @@ export default function CoustomLayout({ children }: { children: ReactNode }) {
       <SessionProvider>
         <QueryProvider>
           <ThemeSync />
+          <FavoriteSync />
           <ScrollProvider>
             <Toaster />
             {hideLayout || <Navbar />}

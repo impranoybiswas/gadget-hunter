@@ -13,8 +13,9 @@ import GoToTop from "@/components/GoToTop";
 
 import ThemeSync from "@/components/ThemeSync";
 import FavoriteSync from "@/components/FavoriteSync";
+import AiChatbot from "@/components/AiChatbot";
 
-export default function CoustomLayout({ children }: { children: ReactNode }) {
+export default function CustomLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const hideLayout =
     pathname.startsWith("/auth") || pathname.startsWith("/dashboard");
@@ -30,6 +31,7 @@ export default function CoustomLayout({ children }: { children: ReactNode }) {
             {hideLayout || <Navbar />}
             {children}
             <GoToTop />
+            <AiChatbot />
             {hideLayout || <Footer />}
           </ScrollProvider>
         </QueryProvider>

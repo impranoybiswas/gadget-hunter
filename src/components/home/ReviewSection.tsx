@@ -127,7 +127,7 @@ export default function ReviewSection() {
         }}
       >
         {reviews.map((review) => (
-          <SwiperSlide key={review.id} className="py-2 px-1 mb-5">
+          <SwiperSlide key={review.id} className="py-2 px-1 mb-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

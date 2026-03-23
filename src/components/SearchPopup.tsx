@@ -113,7 +113,7 @@ export default function SearchPopup() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.97 }}
               transition={{ type: "spring", damping: 28, stiffness: 350 }}
-              className="fixed top-20 left-1/2 -translate-x-1/2 z-[400] w-full max-w-2xl bg-base-100 rounded-2xl shadow-2xl border border-base-content/10 overflow-hidden"
+              className="fixed top-20 left-1/2 -translate-x-1/2 z-[400] w-11/12 max-w-2xl bg-base-100 rounded-2xl shadow-2xl border border-base-content/10 overflow-hidden"
             >
               {/* Search Input */}
               <div className="flex items-center gap-3 px-4 py-3.5 border-b border-base-content/8">

@@ -25,8 +25,6 @@ export default function Header() {
 
   return (
     <header className="w-full space-y-5">
-
-
       {/* Main Banner Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Main Swiper */}
@@ -70,7 +68,7 @@ export default function Header() {
                     {data.subtitle}
                   </p>
                   <Link
-                    href="/shop"
+                    href={`/shop?category=${data.link}`}
                     className="inline-flex items-center gap-2 mt-2 bg-primary hover:bg-primary-focus text-white font-bold px-5 py-2.5 rounded-xl transition-all active:scale-95 shadow-lg text-sm"
                   >
                     Shop Now <FiArrowRight />
@@ -107,7 +105,7 @@ export default function Header() {
                 </h3>
                 <p className="text-xs text-white/70 mt-0.5">{data.subtitle}</p>
                 <Link
-                  href="/shop"
+                  href={`/shop?category=${data.link}`}
                   className="mt-3 w-fit inline-flex items-center gap-1.5 text-xs font-bold text-white border border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-lg transition-all"
                 >
                   Explore <FiArrowRight size={12} />

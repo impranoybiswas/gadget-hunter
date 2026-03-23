@@ -91,7 +91,7 @@ export default function ShopPage() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+        <div className="flex flex-wrap w-full gap-3 pb-2">
           {["All", ...allCategories].map((cat) => {
             const value = cat === "All" ? "" : cat;
             const isActive = category === value;
@@ -102,7 +102,7 @@ export default function ShopPage() {
                   setPage(1);
                   setCategory(value);
                 }}
-                className={`px-5 py-2 rounded-md whitespace-nowrap border transition-all duration-200 ${isActive
+                className={`px-3 md:px-5 py-2 text-sm md:text-base rounded-md whitespace-nowrap border transition-all duration-200 ${isActive
                     ? "bg-primary text-primary-content shadow-sm border-primary"
                     : "bg-base-200 hover:bg-base-300 border-base-content/10 text-base-content/70"
                   }`}
@@ -114,7 +114,7 @@ export default function ShopPage() {
         </div>
 
         {/* Product Grid */}
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+        <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
           {products.length > 0 ? (
             products.map((product: Product) => (
               <ProductCard key={product._id} product={product} />

@@ -19,6 +19,7 @@ import {
   FiImage,
 } from "react-icons/fi";
 import Button from "@/ui/Button";
+import { categories } from "@/utilities/Categories";
 
 /** Form field types */
 type ProductFormValues = {
@@ -134,11 +135,20 @@ export default function AddProduct() {
               <label className={fieldLabelClass}>
                 <FiLayers className="text-primary/70" /> Category
               </label>
-              <input
-                {...register("category")}
-                placeholder="e.g. Smartphones"
-                className={inputClass}
-              />
+              <select
+                {...register("category", { required: true })}
+                className={`${inputClass} select select-bordered`}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Select Category...
+                </option>
+                {categories.map((cat) => (
+                  <option key={cat.name} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="space-y-1">
@@ -197,33 +207,36 @@ export default function AddProduct() {
               />
             </div>
           </div>
-
           {/* New / Used Toggle */}
-          <div className="bg-base-200/30 p-4 rounded-2xl border border-base-content/5 backdrop-blur-sm">
-            <label className={fieldLabelClass}>Product Condition</label>
-            <div className="flex items-center gap-8 mt-3">
-              <label className="flex items-center gap-3 text-base-content/70 cursor-pointer group">
+          <div className="bg-base-200/40 p-5 rounded-2xl border border-base-content/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-0.5">
+              <label className="text-sm font-bold text-base-content/90">
+                Product Condition
+              </label>
+              <p className="text-xs text-base-content/50">
+                Is this item brand new or pre-owned?
+              </p>
+            </div>
+            <div className="flex bg-base-300/50 p-1.5 rounded-xl border border-base-content/5">
+              <label className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all has-[:checked]:bg-primary has-[:checked]:text-primary-content hover:bg-base-content/5">
                 <input
                   type="radio"
                   value="true"
                   {...register("isBrandNew")}
-                  className="radio radio-primary transition-transform group-hover:scale-110"
+                  className="hidden"
+                  defaultChecked
                 />
-                <span className="group-hover:text-primary transition-colors">
-                  Brand New Item
-                </span>
+                <span className="text-sm font-semibold">New</span>
               </label>
 
-              <label className="flex items-center gap-3 text-base-content/70 cursor-pointer group">
+              <label className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all has-[:checked]:bg-primary has-[:checked]:text-primary-content hover:bg-base-content/5">
                 <input
                   type="radio"
                   value="false"
                   {...register("isBrandNew")}
-                  className="radio radio-primary transition-transform group-hover:scale-110"
+                  className="hidden"
                 />
-                <span className="group-hover:text-primary transition-colors">
-                  Pre-owned / Used
-                </span>
+                <span className="text-sm font-semibold">Used</span>
               </label>
             </div>
           </div>

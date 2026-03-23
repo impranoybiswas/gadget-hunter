@@ -5,7 +5,7 @@ import { ReactNode, useState } from "react";
 import { CgClose } from "react-icons/cg";
 
 interface ModalProps {
-  lebel: ReactNode; // Trigger content
+  label: ReactNode; // Trigger content
   children: ReactNode; // Modal content
   title?: string;
   size?: "sm" | "md" | "lg" | "xl";
@@ -13,14 +13,19 @@ interface ModalProps {
 
 /**
  * Professional Modal Component (Self-Managed Trigger)
- * 
+ *
  * Features:
  * - Built-in trigger mechanism
  * - Smooth entrance/exit via AnimatePresence
  * - Backdrop blur and responsive sizing
  * - Professional header and close button
  */
-export default function Modal({ lebel, children, title, size = "md" }: ModalProps) {
+export default function Modal({
+  label,
+  children,
+  title,
+  size = "md",
+}: ModalProps) {
   const [showModal, setShowModal] = useState(false);
 
   const containerSizes = {
@@ -33,8 +38,11 @@ export default function Modal({ lebel, children, title, size = "md" }: ModalProp
   return (
     <>
       {/* Trigger */}
-      <div className="cursor-pointer active:scale-95 transition-transform" onClick={() => setShowModal(true)}>
-        {lebel}
+      <div
+        className="cursor-pointer active:scale-95 transition-transform"
+        onClick={() => setShowModal(true)}
+      >
+        {label}
       </div>
 
       <AnimatePresence>
@@ -75,9 +83,7 @@ export default function Modal({ lebel, children, title, size = "md" }: ModalProp
               </div>
 
               {/* Body */}
-              <div className="p-8 overflow-y-auto max-h-[80vh]">
-                {children}
-              </div>
+              <div className="p-8 overflow-y-auto max-h-[80vh]">{children}</div>
             </motion.div>
           </div>
         )}

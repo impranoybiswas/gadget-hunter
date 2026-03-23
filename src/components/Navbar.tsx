@@ -51,7 +51,7 @@ export default function Navbar() {
 
         <Drawer
           label={<IconButton icon={<IoMenu />} />}
-          lebelClose={<IconButton icon={<IoClose />} />}
+          labelClose={<IconButton icon={<IoClose />} />}
           className="bg-base-100 text-base-content"
         >
           <div className="flex flex-col gap-3 items-end text-2xl tracking-[2px] uppercase py-4 px-6">

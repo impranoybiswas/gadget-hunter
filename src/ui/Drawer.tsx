@@ -6,7 +6,7 @@ import { CgClose } from "react-icons/cg";
 
 interface DrawerProps {
   label: React.ReactNode;
-  lebelClose?: React.ReactNode;
+  labelClose?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   side?: "left" | "right";
@@ -22,7 +22,7 @@ interface DrawerProps {
  */
 export default function Drawer({
   label,
-  lebelClose,
+  labelClose,
   children,
   className = "",
   side = "right",
@@ -40,7 +40,7 @@ export default function Drawer({
   return (
     <>
       <div className="cursor-pointer active:scale-95 transition-transform" onClick={toggleDrawer}>
-        {isOpen ? lebelClose || label : label}
+        {isOpen ? labelClose || label : label}
       </div>
 
       <AnimatePresence>
@@ -69,7 +69,7 @@ export default function Drawer({
               {/* Header with Close option */}
               <div className="flex items-center justify-between p-5 border-b border-base-content/5">
                 <div onClick={closeDrawer} className="cursor-pointer">
-                  {lebelClose || <CgClose size={24} className="text-base-content/60" />}
+                  {labelClose || <CgClose size={24} className="text-base-content/60" />}
                 </div>
               </div>
 

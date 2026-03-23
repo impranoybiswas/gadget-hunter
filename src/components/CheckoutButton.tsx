@@ -14,7 +14,7 @@ type Props = {
 export default function CheckoutButton({ selectedProducts, cartTotal }: Props) {
   return (
     <Modal
-      lebel={
+      label={
         <Button
           label="Checkout"
           leftIcon={<FaCartShopping />}

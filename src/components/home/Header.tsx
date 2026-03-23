@@ -4,9 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Marquee from "react-fast-marquee";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useGetHeadData } from "@/hooks/useItems";
 import { BannerItem } from "@/types/product";
+import { FiArrowRight } from "react-icons/fi";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -17,25 +19,26 @@ export default function Header() {
   const swiperData: BannerItem[] =
     isLoading || isError ? [] : bannerData?.slice(0, 3) || [];
   const sideData: BannerItem[] =
-    isLoading || isError ? [] : bannerData?.slice(3, 7) || [];
+    isLoading || isError ? [] : bannerData?.slice(3, 5) || [];
 
   const brandLogos = Array.from({ length: 12 }, (_, i) => i + 1);
 
-
   return (
-    <header className="w-full space-y-6">
+    <header className="w-full space-y-5">
+
+
       {/* Main Banner Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Swiper Banner */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Main Swiper */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full h-84 md:h-100 lg:h-120 overflow-hidden col-span-1 lg:col-span-2 rounded-lg shadow-sm"
+          className="w-full h-84 md:h-100 lg:h-[480px] overflow-hidden col-span-1 lg:col-span-2 rounded-2xl shadow-sm"
         >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={20}
+            spaceBetween={0}
             slidesPerView={1}
             navigation={true}
             pagination={{ clickable: true }}
@@ -53,16 +56,25 @@ export default function Header() {
                   alt={data.title}
                   fill
                   priority
-                  className="object-cover rounded-lg transition-transform duration-700 hover:scale-105"
+                  className="object-cover transition-transform duration-700 hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white z-10">
-                  <h2 className="text-2xl md:text-4xl font-bold text-shadow-xs drop-shadow-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full p-8 md:p-10 text-white z-10 space-y-3">
+                  <p className="text-xs font-bold uppercase tracking-widest text-white/60">
+                    New Arrival
+                  </p>
+                  <h2 className="text-2xl md:text-4xl font-black leading-tight drop-shadow-sm">
                     {data.title}
                   </h2>
-                  <p className="text-base md:text-lg font-medium opacity-90">
+                  <p className="text-sm md:text-base font-medium text-white/80 max-w-md">
                     {data.subtitle}
                   </p>
+                  <Link
+                    href="/shop"
+                    className="inline-flex items-center gap-2 mt-2 bg-primary hover:bg-primary-focus text-white font-bold px-5 py-2.5 rounded-xl transition-all active:scale-95 shadow-lg text-sm"
+                  >
+                    Shop Now <FiArrowRight />
+                  </Link>
                 </div>
               </SwiperSlide>
             ))}
@@ -70,14 +82,14 @@ export default function Header() {
         </motion.div>
 
         {/* Side Banners */}
-        <div className="flex flex-col gap-6 h-100 lg:h-120">
+        <div className="flex flex-col gap-5 h-100 lg:h-[480px]">
           {sideData.map((data, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 * index, duration: 0.6 }}
-              className="relative h-1/2 rounded-lg overflow-hidden group shadow-md"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 + index * 0.15, duration: 0.6 }}
+              className="relative flex-1 rounded-2xl overflow-hidden group shadow-md cursor-pointer"
             >
               <Image
                 src={data.image}
@@ -85,28 +97,31 @@ export default function Header() {
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 text-white z-10">
-                <h3 className="text-xl font-semibold text-shadow-xs drop-shadow-md">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute inset-0 flex flex-col justify-end p-5 text-white z-10">
+                <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-1">
+                  Featured
+                </p>
+                <h3 className="text-lg font-bold drop-shadow-md leading-tight">
                   {data.title}
                 </h3>
-                <p className="text-sm opacity-90">{data.subtitle}</p>
+                <p className="text-xs text-white/70 mt-0.5">{data.subtitle}</p>
+                <Link
+                  href="/shop"
+                  className="mt-3 w-fit inline-flex items-center gap-1.5 text-xs font-bold text-white border border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-lg transition-all"
+                >
+                  Explore <FiArrowRight size={12} />
+                </Link>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Marquee Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="bg-base-100 h-8 md:h-10 flex items-center overflow-hidden my-2"
-      >
-        <span className="w-[2px] h-full bg-gradient-to-b from-transparent via-base-300 to-transparent" />
+      {/* Brand Marquee */}
+      <div className="bg-base-200/50 border border-base-content/5 rounded-xl h-10 md:h-12 flex items-center overflow-hidden">
         <Marquee speed={40} gradient={false} autoFill>
-          <div className="flex items-center justify-center gap-6 px-3">
+          <div className="flex items-center justify-center gap-8 px-4">
             {brandLogos.map((i, index) => (
               <Image
                 key={index}
@@ -114,13 +129,12 @@ export default function Header() {
                 alt={`logo-${i}`}
                 width={500}
                 height={500}
-                className="h-4 md:h-6 w-auto object-contain dark:invert"
+                className="h-4 md:h-5 w-auto object-contain dark:invert transition"
               />
             ))}
           </div>
         </Marquee>
-        <span className="w-[2px] h-full bg-gradient-to-b from-transparent via-base-300 to-transparent" />
-      </motion.div>
+      </div>
     </header>
   );
 }

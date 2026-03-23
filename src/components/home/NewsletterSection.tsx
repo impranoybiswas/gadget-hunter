@@ -69,29 +69,34 @@ export default function NewsletterSection() {
             className="bg-white/5 backdrop-blur-xl border border-white/10 p-2 rounded-3xl"
           >
             {!isSubscribed ? (
-              <form
-                onSubmit={handleSubscribe}
-                className="flex flex-col sm:flex-row gap-2"
-              >
-                <div className="relative flex-1">
-                  <FiMail className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30 text-xl" />
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-transparent border-none focus:ring-0 pl-14 pr-6 py-5 text-white placeholder:text-white/20 font-medium"
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="bg-primary hover:bg-primary-focus text-primary-content font-black px-8 py-5 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20"
+              <>
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex flex-col sm:flex-row gap-2"
                 >
-                  <FiSend className="text-lg" />
-                  <span>Join Now</span>
-                </button>
-              </form>
+                  <div className="relative flex-1">
+                    <FiMail className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30 text-xl" />
+                    <input
+                      type="email"
+                      placeholder="Enter your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-transparent border-none focus:ring-0 pl-14 pr-6 py-5 text-white placeholder:text-white/20 font-medium"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-primary hover:bg-primary-focus text-primary-content font-black px-8 py-5 rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20 shrink-0"
+                  >
+                    <FiSend className="text-lg" />
+                    <span>Join Now</span>
+                  </button>
+                </form>
+                <p className="text-center text-white/20 text-xs mt-3">
+                  No spam. Unsubscribe anytime.
+                </p>
+              </>
             ) : (
               <div className="flex items-center justify-center gap-4 py-8 text-primary">
                 <FiCheckCircle size={40} className="animate-bounce" />

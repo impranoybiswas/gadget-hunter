@@ -1,24 +1,36 @@
 "use client";
 
-import Section from "@/ui/Section";
 import { FaCopy, FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { FiTag } from "react-icons/fi";
 
 const coupons = [
-  { code: "SAVE10", discount: "10%", desc: "Get 10% off on all mobiles" },
+  {
+    code: "SAVE10",
+    discount: "10%",
+    desc: "Get 10% off on all mobiles",
+    expires: "Apr 30",
+  },
   {
     code: "NEWUSER20",
     discount: "20%",
     desc: "Welcome gift for first-time buyers",
+    expires: "May 15",
   },
   {
     code: "NEW30",
     discount: "30%",
     desc: "Extra 30% off on your next purchase",
+    expires: "Apr 25",
   },
-  { code: "PACKME", discount: "25%", desc: "Bundle offers with 25% savings" },
+  {
+    code: "PACKME",
+    discount: "25%",
+    desc: "Bundle offers with 25% savings",
+    expires: "May 01",
+  },
 ];
 
 export default function CouponSection() {
@@ -26,69 +38,93 @@ export default function CouponSection() {
 
   const handleCopy = async (code: string) => {
     try {
-      // Request clipboard permission if needed
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(code);
-        setCopied(code);
-        setTimeout(() => setCopied(null), 2000);
       } else {
-        // fallback for unsupported browsers
-        const tempInput = document.createElement("input");
-        tempInput.value = code;
-        document.body.appendChild(tempInput);
-        tempInput.select();
+        const tmp = document.createElement("input");
+        tmp.value = code;
+        document.body.appendChild(tmp);
+        tmp.select();
         document.execCommand("copy");
-        document.body.removeChild(tempInput);
-        setCopied(code);
-        setTimeout(() => setCopied(null), 2000);
+        document.body.removeChild(tmp);
       }
-    } catch (err) {
-      console.error("Clipboard copy failed:", err);
-      toast.error("Failed to copy the coupon code. Please try manually.");
+      setCopied(code);
+      toast.success(`Coupon "${code}" copied!`);
+      setTimeout(() => setCopied(null), 2500);
+    } catch {
+      toast.error("Failed to copy. Please try manually.");
     }
   };
 
   return (
-    <Section
-      title="Exclusive Coupon Discounts"
-      subtitle="Grab limited-time deals and enjoy instant savings"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-10"
-    >
-      {coupons.map((coupon, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-          className="relative bg-gradient-to-br from-primary to-primary/80 text-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-500 ease-in-out p-6 flex flex-col items-center justify-between text-center"
-        >
-          <div className="bg-secondary text-primary rounded-full size-30 flex flex-col items-center justify-center shadow-inner font-extrabold text-2xl tracking-tight mb-4 border-6 border-primary-content/20">
-            {coupon.discount}
-            <span className="text-sm font-semibold -mt-1 text-primary/80">OFF</span>
-          </div>
-
-          <p className="text-sm md:text-base font-medium opacity-90 mb-6 px-2">
-            {coupon.desc}
+    <section className="w-full">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">
+            Limited Time
           </p>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">
+            Exclusive Coupons
+          </h2>
+        </div>
+        <p className="text-sm text-base-content/50">
+          Click any code to copy instantly
+        </p>
+      </div>
 
-          <button
-            onClick={() => handleCopy(coupon.code)}
-            className="group relative cursor-pointer font-mono flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-4 py-2 text-sm md:text-base select-none transition-all duration-300"
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {coupons.map((coupon, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="relative flex flex-col rounded-2xl overflow-hidden border border-primary/20 bg-base-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
-            {copied === coupon.code ? (
-              <>
-                <FaCheckCircle className="text-green-300" />
-                <span className="text-green-200">Copied!</span>
-              </>
-            ) : (
-              <>
+            {/* Top ribbon */}
+            <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-content px-5 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <FiTag size={16} />
+                <span className="text-xs font-bold uppercase tracking-wider opacity-80">
+                  Discount
+                </span>
+              </div>
+              <span className="text-2xl font-black">{coupon.discount}</span>
+            </div>
+
+            {/* Dashed divider */}
+            <div className="relative flex items-center px-4">
+              <div className="absolute -left-3 size-6 rounded-full bg-base-100 border border-primary/20" />
+              <div className="absolute -right-3 size-6 rounded-full bg-base-100 border border-primary/20" />
+              <div className="w-full border-t-2 border-dashed border-primary/20" />
+            </div>
+
+            {/* Body */}
+            <div className="px-5 py-4 flex flex-col gap-3 flex-1">
+              <p className="text-sm text-base-content/70 leading-relaxed">
+                {coupon.desc}
+              </p>
+              <p className="text-xs text-base-content/40 font-medium">
+                Expires: {coupon.expires}
+              </p>
+
+              <button
+                onClick={() => handleCopy(coupon.code)}
+                className="w-full flex items-center justify-between gap-2 mt-auto bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-xl px-4 py-2.5 text-sm font-mono font-bold text-primary transition-all duration-200 cursor-pointer group"
+              >
                 <span>{coupon.code}</span>
-                <FaCopy className="group-hover:text-yellow-300 transition" />
-              </>
-            )}
-          </button>
-        </motion.div>
-      ))}
-    </Section>
+                {copied === coupon.code ? (
+                  <FaCheckCircle className="text-success shrink-0" />
+                ) : (
+                  <FaCopy className="text-primary/40 group-hover:text-primary shrink-0 transition" />
+                )}
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
   );
 }

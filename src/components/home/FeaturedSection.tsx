@@ -1,84 +1,137 @@
 "use client";
 import { useGetItems } from "@/hooks/useItems";
-import Section from "@/ui/Section";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import FavouriteButton from "../FavouriteButton";
+import { useState } from "react";
+import { FiArrowRight } from "react-icons/fi";
+
+const TABS = ["All", "Mobile", "Tablet", "Earbuds", "Smart Watch"];
 
 export default function FeaturedProductSection() {
-  const { data, isLoading } = useGetItems(1, "", "", "");
+  const [activeTab, setActiveTab] = useState("All");
+  const { data, isLoading } = useGetItems(
+    1,
+    "",
+    activeTab === "All" ? "" : activeTab.toLowerCase(),
+    "",
+  );
 
-  if (isLoading)
-    return (
-      <Section title="Featured Products" subtitle="Top picks curated for you">
-        <p className="text-center text-gray-500 py-10">
-          Loading featured items...
-        </p>
-      </Section>
-    );
-
-  const products = data?.items.slice(0, 15) || [];
+  const products = data?.items.slice(0, 10) || [];
 
   return (
-    <Section
-      title="Featured Products"
-      subtitle="Top picks curated for you"
-      className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"
-    >
-      {products.map((p, index) => (
-        <motion.div
-          key={p._id}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.05, duration: 0.4 }}
-          className="group relative rounded-md overflow-hidden border border-base-content/10 bg-base-100 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col"
+    <section className="w-full">
+      {/* Section header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">
+            Handpicked for You
+          </p>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">
+            Featured Products
+          </h2>
+        </div>
+        <Link
+          href="/shop"
+          className="flex items-center gap-1.5 text-sm font-bold text-primary hover:underline underline-offset-4 transition shrink-0"
         >
-          {/* Image */}
-          <div className="relative w-full aspect-square overflow-hidden bg-base-200">
-            <Image
-              src={p.images?.[0] || "/assets/placeholder-image.svg"}
-              alt={p.name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
+          View All <FiArrowRight />
+        </Link>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-2 flex-wrap mb-8">
+        {TABS.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-all duration-200 cursor-pointer ${
+              activeTab === tab
+                ? "bg-primary text-primary-content border-primary shadow-sm"
+                : "bg-base-200/60 text-base-content/60 border-base-content/10 hover:border-primary/40 hover:text-primary"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Product grid */}
+      {isLoading ? (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-2xl bg-base-200 animate-pulse aspect-[3/4]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {products.map((p, index) => (
+            <motion.div
+              key={p._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.04, duration: 0.35 }}
+              className="group relative rounded-2xl overflow-hidden border border-base-content/8 bg-base-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
+            >
+              {/* Favourite */}
+              <div className="absolute top-3 right-3 z-20">
+                <FavouriteButton productId={p._id as string} />
+              </div>
 
-            {/* Quick View Button */}
-            <div className="absolute bottom-3 inset-x-0 flex justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-              <Link
-                href={`/shop/${p._id}`}
-                className="px-4 py-1.5 bg-base-100 text-primary text-sm font-semibold rounded-full shadow hover:bg-primary hover:text-primary-content transition"
-              >
-                View Details
+              {/* Category Tag */}
+              <div className="absolute top-3 left-3 z-20 bg-primary/90 text-primary-content text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
+                {p.category}
+              </div>
+
+              {/* Image */}
+              <Link href={`/shop/${p._id}`} className="block">
+                <div className="relative w-full aspect-square overflow-hidden bg-base-200">
+                  <Image
+                    src={p.images?.[0] || "/assets/placeholder-image.svg"}
+                    alt={p.name}
+                    fill
+                    className="object-cover group-hover:scale-107 transition-transform duration-500 ease-in-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                  {/* Quick View pill */}
+                  <div className="absolute bottom-0 inset-x-0 flex justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-300 pb-3">
+                    <span className="px-4 py-1.5 bg-white text-primary text-xs font-bold rounded-full shadow-lg">
+                      Quick View
+                    </span>
+                  </div>
+                </div>
               </Link>
-            </div>
-          </div>
 
-          {/* Content */}
-          <div className="flex flex-col flex-1 px-3 md:px-4 py-3">
-            <p className="text-xs text-base-content/50 uppercase tracking-wide mb-1">
-              {p.brand}
-            </p>
-            <h3 className="font-semibold text-sm md:text-base text-base-content line-clamp-1">
-              {p.name}
-            </h3>
-            <div className="flex items-center gap-1 text-primary font-semibold mt-2">
-              <span className="text-base md:text-xl">{"BDT "+p.price}</span>
-            </div>
-          </div>
+              {/* Info */}
+              <div className="flex flex-col flex-1 px-3 md:px-4 py-3">
+                <p className="text-[10px] text-base-content/40 uppercase tracking-widest font-bold mb-1">
+                  {p.brand}
+                </p>
+                <h3 className="font-semibold text-xs md:text-sm text-base-content line-clamp-2 leading-snug mb-2">
+                  {p.name}
+                </h3>
+                <div className="mt-auto flex items-center justify-between">
+                  <span className="text-sm md:text-base font-black text-primary">
+                    BDT {p.price?.toLocaleString()}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
 
-          {/* Wishlist Button */}
-          <div className="absolute top-3 right-3 z-10">
-            <FavouriteButton productId={p._id as string} />
-          </div>
-
-          {/* Floating Tag (Optional) */}
-          <div className="absolute top-3 left-3 bg-primary text-primary-content text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide shadow-sm">
-            {p.category}
-          </div>
-        </motion.div>
-      ))}
-    </Section>
+      {products.length === 0 && !isLoading && (
+        <div className="text-center py-20 bg-base-200/30 rounded-3xl border border-dashed border-base-content/10">
+          <p className="text-base-content/40 text-sm">
+            No products found in this category.
+          </p>
+        </div>
+      )}
+    </section>
   );
 }

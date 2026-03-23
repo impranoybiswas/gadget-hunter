@@ -1,33 +1,54 @@
 "use client";
 
-import Section from "@/ui/Section";
 import Link from "next/link";
 import { categories } from "@/utilities/Categories";
+import { motion } from "framer-motion";
 
 export default function CategorySection() {
   return (
-    <Section
-      title="Top Categories"
-      subtitle="Find the perfect tech for your lifestyle"
-      className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6"
-    >
-      {categories.map((category, i) => (
+    <section className="w-full">
+      {/* Section header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">
+            Browse by Type
+          </p>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">
+            Top Categories
+          </h2>
+        </div>
         <Link
-          key={i}
-          href={`/shop?category=${category.name.toLowerCase()}`}
-          className="group relative flex flex-col items-center justify-center text-center h-36 md:h-44 rounded-2xl bg-gradient-to-b from-primary/90 to-primary text-white border border-white/10 shadow-md hover:shadow-lg transition-all duration-500 ease-out hover:-translate-y-1 hover:scale-[1.03] text-3xl md:text-4xl lg:text-5xl px-2"
+          href="/shop"
+          className="text-sm font-bold text-primary hover:underline underline-offset-4 transition shrink-0"
         >
-          <div className=" group-hover:text-yellow-300 transition-colors duration-300">
-            {category.icon}
-          </div>
-          <span className="mt-3 text-base md:text-lg font-semibold tracking-wide uppercase group-hover:text-yellow-300 transition-colors duration-300">
-            {category.name}
-          </span>
-
-          {/* subtle animated glow */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-yellow-400 blur-2xl rounded-2xl transition-opacity duration-500"></div>
+          View All Products →
         </Link>
-      ))}
-    </Section>
+      </div>
+
+      {/* Category grid */}
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
+        {categories.map((category, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+          >
+            <Link
+              href={`/shop?category=${category.name.toLowerCase()}`}
+              className="group flex flex-col items-center justify-center text-center p-4 md:p-5 rounded-2xl bg-base-200/60 border border-base-content/5 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 hover:-translate-y-1 h-28 md:h-36 gap-3"
+            >
+              <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300">
+                {category.icon}
+              </span>
+              <span className="text-xs md:text-sm font-bold text-base-content/70 group-hover:text-primary transition-colors duration-300 leading-tight">
+                {category.name}
+              </span>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+    </section>
   );
 }

@@ -3,10 +3,9 @@ import Image from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-import Section from "@/ui/Section";
 import { FaStar } from "react-icons/fa6";
+import { FiMessageSquare } from "react-icons/fi";
 import { motion } from "framer-motion";
-
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -16,138 +15,166 @@ const reviews = [
     name: "Raju Kader",
     photo: "https://i.pravatar.cc/300?img=1",
     rating: 5,
-    review: "The booking experience was smooth and easy. Loved the event!",
+    review:
+      "Ordered a phone and it arrived in perfect condition within 2 days. Outstanding packaging!",
   },
   {
     id: 2,
     name: "Rahim Ahmed",
     photo: "https://i.pravatar.cc/300?img=2",
     rating: 4,
-    review: "Affordable tickets and very user-friendly system.",
+    review:
+      "Great product quality. The earbuds I got exceed the description. Will order again.",
   },
   {
     id: 3,
     name: "Riya Chowdhury",
     photo: "https://i.pravatar.cc/300?img=3",
     rating: 5,
-    review: "Best ticket booking site I’ve ever used. Highly recommended!",
+    review:
+      "Best gadget store I've used. Fast shipping and exactly what I ordered. Highly recommended!",
   },
   {
     id: 4,
     name: "Karim Khan",
     photo: "https://i.pravatar.cc/300?img=4",
     rating: 4,
-    review: "Quick checkout process and great offers available.",
+    review:
+      "Quick checkout and great offers available. The smartwatch I bought is amazing.",
   },
   {
     id: 5,
     name: "Emily Brown",
     photo: "https://i.pravatar.cc/300?img=5",
     rating: 5,
-    review: "I loved how fast I got my e-ticket with QR code.",
+    review:
+      "Loved the product photos — they match reality perfectly. Very professional store.",
   },
   {
     id: 6,
     name: "David Smith",
     photo: "https://i.pravatar.cc/300?img=6",
-    rating: 3,
-    review: "Good platform but could use more payment options.",
+    rating: 4,
+    review:
+      "Good overall experience. The tablet arrived in 3 days with all accessories included.",
   },
   {
     id: 7,
     name: "Fatima Noor",
     photo: "https://i.pravatar.cc/300?img=7",
     rating: 5,
-    review: "Amazing discounts! I saved a lot booking early.",
+    review:
+      "Amazing discounts! I got my new earbuds at nearly half price during the flash sale.",
   },
   {
     id: 8,
     name: "John Wilson",
     photo: "https://i.pravatar.cc/300?img=8",
     rating: 4,
-    review: "Easy navigation, nice UI, and reliable service.",
+    review:
+      "Easy navigation, great product selection and reliable delivery. Very happy with my tablet.",
   },
   {
     id: 9,
     name: "Maya Ali",
     photo: "https://i.pravatar.cc/300?img=9",
     rating: 5,
-    review: "Loved the seamless process and quick customer support.",
+    review:
+      "Super fast shipping and responsive customer support. The smartwatch looks premium.",
   },
   {
     id: 10,
     name: "Carlos Mendes",
     photo: "https://i.pravatar.cc/300?img=10",
-    rating: 4,
-    review: "Convenient and trustworthy ticket booking site.",
+    rating: 5,
+    review:
+      "Convenient and trustworthy gadget store. The product quality is consistent.",
   },
 ];
 
 export default function ReviewSection() {
   return (
-    <Section
-      title="Customer Reviews"
-      subtitle="Hear from our happy customers"
-      className="mb-10"
-    >
+    <section className="w-full">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">
+            Social Proof
+          </p>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">
+            What Customers Say
+          </h2>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-base-content/50">
+          <FiMessageSquare />
+          <span>{reviews.length}+ verified reviews</span>
+        </div>
+      </div>
+
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
         loop={true}
-        spaceBetween={24}
-        className="w-full"
+        navigation
+        spaceBetween={20}
+        className="w-full pb-12"
         breakpoints={{
-          320: { slidesPerView: 1.3 },
+          320: { slidesPerView: 1.2 },
           640: { slidesPerView: 2 },
-          1024: { slidesPerView: 4 },
+          1024: { slidesPerView: 3 },
+          1280: { slidesPerView: 4 },
         }}
       >
         {reviews.map((review) => (
-          <SwiperSlide key={review.id} className="w-full py-10 px-1">
+          <SwiperSlide key={review.id} className="py-2 px-1 mb-5">
             <motion.div
-              initial={{ opacity: 0, scale: 0.8, y: 10 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-base-100 border border-base-content/5 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-2 transition-all duration-500 ease-in-out p-5 text-center h-full flex flex-col justify-between"
+              className="bg-base-100 border border-base-content/8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1.5 transition-all duration-400 p-5 h-full flex flex-col justify-between"
             >
-              <div className="flex flex-col items-center">
-                <div className="relative mb-4">
-                  <Image
-                    className="rounded-full border-4 border-primary/30 object-cover"
-                    src={review.photo}
-                    alt={review.name}
-                    width={80}
-                    height={80}
+              {/* Stars */}
+              <div className="flex gap-0.5 mb-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <FaStar
+                    key={i}
+                    className={
+                      i < review.rating
+                        ? "text-warning"
+                        : "text-base-content/10"
+                    }
+                    size={13}
                   />
-                  <span className="absolute -bottom-1 right-0 bg-primary text-primary-content text-xs font-semibold px-2 py-0.5 rounded-full shadow">
-                    ★ {review.rating}
-                  </span>
-                </div>
-
-                <h3 className="text-base font-semibold text-base-content">
-                  {review.name}
-                </h3>
-
-                <div className="flex justify-center mt-2 mb-3">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <FaStar key={i} className="text-warning text-sm" />
-                  ))}
-                </div>
-
-                <p className="text-sm text-base-content/60 italic leading-relaxed line-clamp-2">
-                  “{review.review}”
-                </p>
+                ))}
               </div>
 
-              <div className="mt-5">
-                <div className="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+              {/* Quote */}
+              <p className="text-sm text-base-content/70 leading-relaxed italic flex-1">
+                &ldquo;{review.review}&rdquo;
+              </p>
+
+              {/* Reviewer */}
+              <div className="flex items-center gap-3 mt-5 pt-4 border-t border-base-content/5">
+                <Image
+                  className="rounded-full object-cover shrink-0 border-2 border-primary/20"
+                  src={review.photo}
+                  alt={review.name}
+                  width={40}
+                  height={40}
+                />
+                <div>
+                  <p className="text-sm font-bold text-base-content">
+                    {review.name}
+                  </p>
+                  <p className="text-xs text-base-content/40">Verified Buyer</p>
+                </div>
               </div>
             </motion.div>
           </SwiperSlide>
         ))}
       </Swiper>
-    </Section>
+    </section>
   );
 }

@@ -13,14 +13,14 @@ export default function TopCategorySection() {
 
   return (
     <Section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-10">
-      {categories.map((category) => (
-        <CategorySwiper key={category} category={category} />
+      {categories.map((category, index) => (
+        <CategorySwiper key={index} category={category} index={index} />
       ))}
     </Section>
   );
 }
 
-function CategorySwiper({ category }: { category: string }) {
+function CategorySwiper({ category, index }: { category: string, index: number }) {
   const { data, isLoading } = useGetItems(1, "", category.toLowerCase(), "", true);
 
   if (isLoading)
@@ -37,7 +37,7 @@ function CategorySwiper({ category }: { category: string }) {
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="bg-gradient-to-br from-primary/90 to-primary rounded-2xl shadow overflow-hidden p-2"
+      className="bg-gradient-to-br from-primary/90 to-primary rounded-2xl shadow overflow-hidden p-3"
     >
       <div className="text-center py-3">
         <h3 className="text-white text-xl font-semibold tracking-wide uppercase">
@@ -50,7 +50,7 @@ function CategorySwiper({ category }: { category: string }) {
         spaceBetween={10}
         slidesPerView={1}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        autoplay={{ delay: index * 500 + 2000, disableOnInteraction: false }}
         loop
         className="w-full h-72"
       >
@@ -71,7 +71,7 @@ function CategorySwiper({ category }: { category: string }) {
                   {item.name}
                 </h4>
                 <p className="text-white/80 text-sm pb-5">
-                  ৳{item.price?.toLocaleString("bn-BD") || "N/A"}
+                  BDT {item.price?.toLocaleString() || "N/A"}
                 </p>
               </div>
             </Link>

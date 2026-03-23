@@ -6,15 +6,20 @@ import ReviewSection from "@/components/home/ReviewSection";
 import Container from "@/ui/Container";
 import TopCategorySection from "@/components/home/TopCategorySection";
 
+import BlogSection from "@/components/home/BlogSection";
+import NewsletterSection from "@/components/home/NewsletterSection";
+
 export default function Home() {
   return (
     <Container>
       <Header />
       <CategorySection />
       <FeaturedProductSection />
-      <TopCategorySection/>
+      <TopCategorySection />
       <CouponSection />
+      <BlogSection />
       <ReviewSection />
+      <NewsletterSection />
     </Container>
   );
 }

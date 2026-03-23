@@ -7,7 +7,6 @@ export interface Product {
   category: string;
   warranty: string;
   description: string;
-  isBrandNew: boolean;
   images: string[];
   totalPrice?: number;
   totalProducts?: number ;

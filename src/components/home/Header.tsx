@@ -37,7 +37,7 @@ export default function Header() {
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={20}
             slidesPerView={1}
-            navigation
+            navigation={true}
             pagination={{ clickable: true }}
             autoplay={{ delay: 3500, disableOnInteraction: false }}
             loop

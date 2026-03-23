@@ -30,7 +30,6 @@ type ProductFormValues = {
   category: string;
   warranty: string;
   description: string;
-  isBrandNew: string;
 };
 
 export default function AddProduct() {
@@ -69,7 +68,6 @@ export default function AddProduct() {
         category: data.category.trim(),
         warranty: data.warranty.trim(),
         description: data.description.trim(),
-        isBrandNew: data.isBrandNew === "true",
         images: uploadedImages,
       };
 
@@ -207,39 +205,8 @@ export default function AddProduct() {
               />
             </div>
           </div>
-          {/* New / Used Toggle */}
-          <div className="bg-base-200/40 p-5 rounded-2xl border border-base-content/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="space-y-0.5">
-              <label className="text-sm font-bold text-base-content/90">
-                Product Condition
-              </label>
-              <p className="text-xs text-base-content/50">
-                Is this item brand new or pre-owned?
-              </p>
-            </div>
-            <div className="flex bg-base-300/50 p-1.5 rounded-xl border border-base-content/5">
-              <label className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all has-[:checked]:bg-primary has-[:checked]:text-primary-content hover:bg-base-content/5">
-                <input
-                  type="radio"
-                  value="true"
-                  {...register("isBrandNew")}
-                  className="hidden"
-                  defaultChecked
-                />
-                <span className="text-sm font-semibold">New</span>
-              </label>
 
-              <label className="flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all has-[:checked]:bg-primary has-[:checked]:text-primary-content hover:bg-base-content/5">
-                <input
-                  type="radio"
-                  value="false"
-                  {...register("isBrandNew")}
-                  className="hidden"
-                />
-                <span className="text-sm font-semibold">Used</span>
-              </label>
-            </div>
-          </div>
+          
         </div>
 
         {/* Section 3: Description */}

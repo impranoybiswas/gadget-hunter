@@ -30,7 +30,7 @@ export default function CartButton({
     }
 
     const cartItem = currentUser.carts?.find(
-      (c: { productId: string }) => c.productId === productId
+      (c: { productId: string }) => c.productId === productId,
     );
 
     setQuantity(cartItem?.quantity ?? 0);
@@ -54,7 +54,7 @@ export default function CartButton({
           // Rollback on error
           setQuantity(prevQty);
         },
-      }
+      },
     );
   };
 

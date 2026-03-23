@@ -59,7 +59,7 @@ export default function ProductDetailPage() {
               product.images.map((img, index) => (
                 <SwiperSlide key={index} className="relative w-full h-full">
                   <Image
-                    src={img}
+                    src={img || "/assets/placeholder-image.svg"}
                     alt={product.name}
                     fill
                     className="object-cover rounded-2xl"
@@ -99,20 +99,22 @@ export default function ProductDetailPage() {
           {/* Product Specs */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm text-base-content/80">
             <div className="bg-base-200 p-2 rounded-lg text-center">
-              <span className="font-bold text-base-content block text-xs uppercase opacity-60">Category</span>
-              {product.category}
+              <span className="font-bold text-base-content block text-xs uppercase opacity-60">
+                Category
+              </span>
+              {product.category.toLocaleUpperCase()}
             </div>
             <div className="bg-base-200 p-2 rounded-lg text-center">
-              <span className="font-bold text-base-content block text-xs uppercase opacity-60">Warranty</span>
-              {product.warranty || "N/A"}
+              <span className="font-bold text-base-content block text-xs uppercase opacity-60">
+                Warranty
+              </span>
+              {product.warranty.toLocaleUpperCase() || "N/A"}
             </div>
             <div className="bg-base-200 p-2 rounded-lg text-center">
-              <span className="font-bold text-base-content block text-xs uppercase opacity-60">Condition</span>
-              {product.isBrandNew ? "Brand New" : "Used"}
-            </div>
-            <div className="bg-base-200 p-2 rounded-lg text-center">
-              <span className="font-bold text-base-content block text-xs uppercase opacity-60">Stock</span>
-              {product.quantity} pcs
+              <span className="font-bold text-base-content block text-xs uppercase opacity-60">
+                Stock
+              </span>
+              {product.quantity} Pcs
             </div>
           </div>
 
@@ -129,7 +131,7 @@ export default function ProductDetailPage() {
           {/* ======== Action Buttons ======== */}
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
             {/* Favourite Button */}
-            <div className="flex items-center justify-center gap-3 w-full sm:w-auto border border-error/20 bg-error/5 hover:bg-error/10 transition-all duration-300 px-5 py-2.5 rounded-lg shadow-sm cursor-pointer group">
+            <div className="flex items-center justify-center gap-3 w-full sm:w-auto border border-error/20 bg-error/5 hover:bg-error/10 transition-all duration-300 px-5 h-14 rounded-lg shadow-sm cursor-pointer group">
               <span className="font-medium text-base-content/70 text-sm group-hover:text-error transition-colors">
                 Add to favorites
               </span>
@@ -137,7 +139,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Add to Cart */}
-            <div className="flex items-center justify-center gap-3 w-full sm:w-auto border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all duration-300 px-5 py-2.5 rounded-lg shadow-sm cursor-pointer group">
+            <div className="flex items-center justify-center gap-3 w-full sm:w-auto border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all duration-300 px-5 h-14 rounded-lg shadow-sm cursor-pointer group">
               <FaShoppingCart className="text-primary text-lg" />
               <span className="font-medium text-base-content/70 text-sm group-hover:text-primary transition-colors">
                 Add to Cart

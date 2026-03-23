@@ -14,7 +14,7 @@ interface SectionProps {
 
 /**
  * Professional Section Component
- * 
+ *
  * Features:
  * - Refined typography and spacing
  * - Optional entrance animations via framer-motion
@@ -29,9 +29,11 @@ export default function Section({
   animate = false,
 }: SectionProps) {
   const content = (
-    <section className={`w-full flex flex-col items-center ${containerClassName}`}>
+    <section
+      className={`w-full flex flex-col items-center ${containerClassName}`}
+    >
       {title && (
-        <h2 className="text-2xl md:text-3xl lg:text-4xl mb-3 font-extrabold text-base-content tracking-tight text-center">
+        <h2 className="text-xl md:text-2xl lg:text-3xl mb-3 font-black text-base-content tracking-tight text-center">
           {title}
         </h2>
       )}
@@ -40,9 +42,7 @@ export default function Section({
           {subtitle}
         </p>
       )}
-      <div className={`w-full ${className}`}>
-        {children}
-      </div>
+      <div className={`w-full ${className}`}>{children}</div>
     </section>
   );
 

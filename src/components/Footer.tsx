@@ -8,6 +8,35 @@ import {
   FaLinkedinIn,
   FaGithub,
 } from "react-icons/fa6";
+import { navLink } from "./Navbar";
+
+const socialLinks = [
+  {
+    name: "Facebook",
+    icon: <FaFacebookF />,
+    href: "https://facebook.com/impranoybiswas",
+  },
+  {
+    name: "Twitter",
+    icon: <FaTwitter />,
+    href: "https://twitter.com/impranoybiswas",
+  },
+  {
+    name: "Instagram",
+    icon: <FaInstagram />,
+    href: "https://instagram.com/impranoybiswas",
+  },
+  {
+    name: "Linkedin",
+    icon: <FaLinkedinIn />,
+    href: "https://linkedin.com/in/impranoybiswas",
+  },
+  {
+    name: "Github",
+    icon: <FaGithub />,
+    href: "https://github.com/impranoybiswas",
+  },
+];
 
 export default function Footer() {
   return (
@@ -31,46 +60,28 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-neutral-content">Quick Links</h3>
+          <h3 className="text-lg font-semibold mb-4 text-neutral-content">
+            Quick Links
+          </h3>
           <ul className="space-y-2 text-neutral-content/70 text-sm">
-            <li>
-              <Link
-                href="/"
-                className="hover:text-primary transition duration-300"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop"
-                className="hover:text-primary transition duration-300"
-              >
-                Shop
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className="hover:text-primary transition duration-300"
-              >
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="hover:text-primary transition duration-300"
-              >
-                Contact
-              </Link>
-            </li>
+            {navLink.map((link) => (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  className="hover:text-primary transition duration-300"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Support */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-neutral-content">Support</h3>
+          <h3 className="text-lg font-semibold mb-4 text-neutral-content">
+            Support
+          </h3>
           <ul className="space-y-2 text-neutral-content/70 text-sm">
             <li>
               <Link
@@ -109,43 +120,20 @@ export default function Footer() {
 
         {/* Social */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-neutral-content">Follow Us</h3>
+          <h3 className="text-lg font-semibold mb-4 text-neutral-content">
+            Follow Us
+          </h3>
           <div className="flex space-x-4 text-xl">
-            <Link
-              href="https://facebook.com"
-              target="_blank"
-              className="hover:text-primary transition duration-300"
-            >
-              <FaFacebookF />
-            </Link>
-            <Link
-              href="https://twitter.com"
-              target="_blank"
-              className="hover:text-primary transition duration-300"
-            >
-              <FaTwitter />
-            </Link>
-            <Link
-              href="https://instagram.com"
-              target="_blank"
-              className="hover:text-primary transition duration-300"
-            >
-              <FaInstagram />
-            </Link>
-            <Link
-              href="https://linkedin.com"
-              target="_blank"
-              className="hover:text-primary transition duration-300"
-            >
-              <FaLinkedinIn />
-            </Link>
-            <Link
-              href="https://github.com"
-              target="_blank"
-              className="hover:text-primary transition duration-300"
-            >
-              <FaGithub />
-            </Link>
+            {socialLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                target="_blank"
+                className="hover:text-primary transition duration-300"
+              >
+                {link.icon}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

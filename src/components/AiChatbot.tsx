@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaRobot } from "react-icons/fa";
-import { FiSend, FiX} from "react-icons/fi";
+import { FiSend, FiX } from "react-icons/fi";
 
 type Message = { role: "user" | "assistant"; text: string };
 
@@ -81,7 +81,7 @@ export default function AiChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-44 right-4 z-[150] w-80 sm:w-96 flex flex-col rounded-3xl overflow-hidden shadow-2xl border border-base-content/10 bg-base-100"
+            className="fixed bottom-44 right-4 z-[150] w-80 sm:w-96 flex flex-col rounded-3xl overflow-hidden shadow-2xl border border-base-content/10 bg-base-100 max-h-[70vh]"
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-5 py-4 bg-primary text-primary-content">
@@ -103,7 +103,7 @@ export default function AiChatbot() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 h-72 overflow-y-auto px-4 py-4 space-y-3 bg-base-200/30">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-base-200/30 min-h-0">
               {chat.map((msg, i) => (
                 <div
                   key={i}

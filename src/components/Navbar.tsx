@@ -7,7 +7,7 @@ import Drawer from "@/ui/Drawer";
 import IconButton from "@/ui/IconButton";
 import { IoClose, IoMenu } from "react-icons/io5";
 
-const navLink = [
+export const navLink = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Shop", href: "/shop" },

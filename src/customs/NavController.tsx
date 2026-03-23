@@ -12,6 +12,7 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
 import { PiShoppingCartLight } from "react-icons/pi";
+import SearchPopup from "@/components/SearchPopup";
 
 export default function NavController() {
   const router = useRouter();
@@ -25,7 +26,9 @@ export default function NavController() {
 
   return (
     <div className="flex-1 flex items-center justify-end gap-2">
+      <SearchPopup />
       <ThemeToggler />
+      
       <div className="relative">
         <IconButton
           icon={<PiShoppingCartLight />}

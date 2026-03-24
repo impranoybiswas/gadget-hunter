@@ -8,7 +8,19 @@ import ProductCard from "@/components/ProductCard";
 import Container from "@/ui/Container";
 import Section from "@/ui/Section";
 import Loading from "@/app/loading";
-import { FaSearch } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiSearch,
+  FiChevronLeft,
+  FiChevronRight,
+  FiChevronsLeft,
+  FiChevronsRight,
+  FiFilter,
+  FiCheckCircle,
+  FiShield,
+  FiTruck,
+} from "react-icons/fi";
+import Image from "next/image";
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
@@ -30,8 +42,12 @@ export default function ShopPage() {
   const { data, isLoading } = useGetItems(page, search, category, brand);
   const { data: allData } = useGetItems(1, "", "", "");
 
-  const allCategories = Array.from(new Set(allData?.items.map((p) => p.category) || []));
-  const allBrands = Array.from(new Set(allData?.items.map((p) => p.brand) || []));
+  const allCategories = Array.from(
+    new Set(allData?.items.map((p) => p.category) || []),
+  );
+  const allBrands = Array.from(
+    new Set(allData?.items.map((p) => p.brand) || []),
+  );
 
   // Sync URL params
   useEffect(() => {
@@ -48,50 +64,82 @@ export default function ShopPage() {
   const products = data?.items || [];
   const totalPages = data?.totalPages || 1;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
   return (
     <Container>
-      <Section
-        title="Our Products"
-        subtitle="Explore top-quality items curated just for you"
-        className="space-y-10"
-      >
-        {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {/* Search Input */}
-          <div className="relative lg:col-span-2">
-            <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+      {/* Header Section */}
+      <div className="w-full text-center space-y-4 mb-12 md:mb-16">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-4xl md:text-5xl lg:text-6xl font-black text-base-content tracking-tight"
+        >
+          Explore the <span className="text-primary">Collection</span>
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-base-content/50 text-lg md:text-xl font-medium max-w-2xl mx-auto"
+        >
+          Discover premium gadgets and modern tech tools curated for hunters
+          like you.
+        </motion.p>
+      </div>
+
+      <Section className="space-y-12">
+        {/* Advanced Filters */}
+        <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
+          <div className="w-full lg:max-w-xl relative group">
+            <FiSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-base-content/30 group-focus-within:text-primary transition-colors text-xl" />
             <input
               type="text"
-              placeholder="Search products..."
+              placeholder="Search for gadgets..."
               value={search}
               onChange={(e) => {
                 setPage(1);
                 setSearch(e.target.value);
               }}
-              className="w-full border border-base-content/10 bg-base-100 rounded-md pl-10 p-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary transition duration-300 text-base-content"
+              className="w-full bg-base-200/50 border border-base-content/5 focus:bg-base-100 focus:border-primary/30 focus:ring-4 focus:ring-primary/5 rounded-2xl pl-14 pr-6 py-4 text-base-content font-medium transition-all duration-300 placeholder:text-base-content/20 shadow-sm"
             />
           </div>
 
-          {/* Brand Dropdown */}
-          <select
-            value={brand}
-            onChange={(e) => {
-              setPage(1);
-              setBrand(e.target.value);
-            }}
-            className="border border-base-content/10 bg-base-100 rounded-md p-3 shadow-sm focus:ring-1 focus:ring-primary transition duration-300 text-base-content"
-          >
-            <option value="">All Brands</option>
-            {allBrands.map((b) => (
-              <option key={b} value={b}>
-                {b.charAt(0).toUpperCase() + b.slice(1)}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center gap-4 w-full lg:w-auto">
+            <div className="relative flex-1 lg:flex-none">
+              <FiFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-base-content/40" />
+              <select
+                value={brand}
+                onChange={(e) => {
+                  setPage(1);
+                  setBrand(e.target.value);
+                }}
+                className="w-full lg:w-48 bg-base-200/50 border border-base-content/5 focus:bg-base-100 focus:border-primary/30 rounded-2xl pl-12 pr-6 py-4 text-base-content font-bold text-sm transition-all appearance-none cursor-pointer hover:bg-base-200"
+              >
+                <option value="">All Brands</option>
+                {allBrands.map((b) => (
+                  <option key={b} value={b}>
+                    {b.charAt(0).toUpperCase() + b.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <p className="hidden sm:block text-xs font-black uppercase tracking-widest text-base-content/30 whitespace-nowrap">
+              {products.length} Items Found
+            </p>
+          </div>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap w-full gap-3 pb-2">
+        {/* Category Pills */}
+        <div className="flex flex-wrap gap-2.5">
           {["All", ...allCategories].map((cat) => {
             const value = cat === "All" ? "" : cat;
             const isActive = category === value;
@@ -102,69 +150,197 @@ export default function ShopPage() {
                   setPage(1);
                   setCategory(value);
                 }}
-                className={`px-3 md:px-5 py-2 text-sm md:text-base rounded-md whitespace-nowrap border transition-all duration-200 ${isActive
-                    ? "bg-primary text-primary-content shadow-sm border-primary"
-                    : "bg-base-200 hover:bg-base-300 border-base-content/10 text-base-content/70"
-                  }`}
+                className={`relative px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-300 cursor-pointer overflow-hidden ${
+                  isActive
+                    ? "text-primary-content"
+                    : "bg-base-200/80 text-base-content/50 hover:bg-base-300 border border-base-content/5"
+                }`}
               >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeCategory"
+                    className="absolute inset-0 bg-primary"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
+                  />
+                )}
+                <span className="relative z-10">
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </span>
               </button>
             );
           })}
         </div>
 
         {/* Product Grid */}
-        <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
-          {products.length > 0 ? (
-            products.map((product: Product) => (
-              <ProductCard key={product._id} product={product} />
-            ))
-          ) : (
-            <p className="text-center text-base-content/50 col-span-full py-10">
-              No products found.
-            </p>
-          )}
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          key={`${category}-${brand}-${search}-${page}`}
+          className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+        >
+          <AnimatePresence mode="popLayout">
+            {products.length > 0 ? (
+              products.map((product: Product) => (
+                <motion.div key={product._id} variants={itemVariants} layout>
+                  <ProductCard product={product} />
+                </motion.div>
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="col-span-full py-20 text-center space-y-4"
+              >
+                <div className="size-20 bg-base-200 rounded-full flex items-center justify-center mx-auto text-3xl text-base-content/20">
+                  <FiSearch />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-base-content">
+                    No gadgets found
+                  </h3>
+                  <p className="text-base-content/40">
+                    Try adjusting your filters or search terms.
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
-            <button
-              className="px-4 py-2 bg-base-200 border border-base-content/10 rounded-lg hover:bg-base-300 transition disabled:opacity-50 text-base-content text-sm font-medium"
+          <div className="flex justify-center items-center gap-2 mt-12 py-8 border-t border-base-content/5">
+            <PaginationButton
               onClick={() => setPage(1)}
               disabled={page === 1}
-            >
-              First
-            </button>
-            <button
-              className="px-4 py-2 bg-base-200 border border-base-content/10 rounded-lg hover:bg-base-300 transition disabled:opacity-50 text-base-content text-sm font-medium"
+              icon={<FiChevronsLeft />}
+            />
+            <PaginationButton
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
               disabled={page === 1}
-            >
-              Prev
-            </button>
+              icon={<FiChevronLeft />}
+            />
 
-            <span className="font-semibold text-base-content px-4 py-2 bg-base-100 border border-base-content/10 rounded-lg text-sm">
-              Page {page} of {totalPages}
-            </span>
+            <div className="flex items-center gap-2 px-6">
+              <span className="text-sm font-black text-base-content">
+                Page {page}{" "}
+                <span className="text-base-content/30 mx-1">of</span>{" "}
+                {totalPages}
+              </span>
+            </div>
 
-            <button
-              className="px-4 py-2 bg-base-200 border border-base-content/10 rounded-lg hover:bg-base-300 transition disabled:opacity-50 text-base-content text-sm font-medium"
+            <PaginationButton
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page === totalPages}
-            >
-              Next
-            </button>
-            <button
-              className="px-4 py-2 bg-base-200 border border-base-content/10 rounded-lg hover:bg-base-300 transition disabled:opacity-50 text-base-content text-sm font-medium"
+              icon={<FiChevronRight />}
+            />
+            <PaginationButton
               onClick={() => setPage(totalPages)}
               disabled={page === totalPages}
-            >
-              Last
-            </button>
+              icon={<FiChevronsRight />}
+            />
           </div>
         )}
       </Section>
+
+      {/* NEW: Post-Pagination Brand Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mt-24 mb-16 md:mb-24 overflow-hidden rounded-[3rem] bg-base-200 border border-base-content/5 relative group"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div className="p-12 md:p-20 space-y-10 flex flex-col justify-center">
+            <div className="space-y-4">
+              <h2 className="text-4xl md:text-5xl font-black text-base-content leading-tight tracking-tight">
+                The Gadget Hunter <br />
+                <span className="text-primary italic">Promise</span>
+              </h2>
+              <p className="text-base-content/60 text-lg font-medium max-w-md">
+                We don&apos;t just sell products; we curate high-performance
+                tools for your digital life.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {[
+                {
+                  title: "100% Original",
+                  desc: "Genuine brands only",
+                  icon: <FiCheckCircle />,
+                },
+                {
+                  title: "Secure Check",
+                  desc: "SSL encrypted payments",
+                  icon: <FiShield />,
+                },
+                {
+                  title: "Fast Shipping",
+                  desc: "Safe doorstep delivery",
+                  icon: <FiTruck />,
+                },
+                {
+                  title: "Tech Support",
+                  desc: "Expert help 24/7",
+                  icon: <FiCheckCircle />,
+                },
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-4">
+                  <div className="size-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl shrink-0">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h4 className="font-black text-base-content tracking-tight">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs text-base-content/40 font-bold uppercase tracking-widest mt-0.5">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative h-[400px] lg:h-auto overflow-hidden">
+            <Image
+              src="/shop/footer.png"
+              alt="Premium Gadget Collection"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-base-200 via-transparent to-transparent hidden lg:block" />
+          </div>
+        </div>
+      </motion.div>
     </Container>
+  );
+}
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function PaginationButton({
+  onClick,
+  disabled,
+  icon,
+}: {
+  onClick: () => void;
+  disabled: boolean;
+  icon: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`size-11 flex items-center justify-center rounded-2xl bg-base-200 border border-base-content/5 text-xl transition-all active:scale-90 ${
+        disabled
+          ? "opacity-30 cursor-not-allowed"
+          : "hover:bg-primary hover:text-primary-content hover:shadow-lg hover:shadow-primary/20 cursor-pointer"
+      }`}
+    >
+      {icon}
+    </button>
   );
 }

@@ -7,9 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  FaMobile,
-  FaLaptop,
-  FaHeadphones,
   FaStar,
   FaBolt,
   FaRocket,
@@ -21,28 +18,6 @@ import {
 import { FiArrowRight } from "react-icons/fi";
 
 export default function About() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-      },
-    },
-  };
-
   return (
     <Container>
       {/* Hero Section */}
@@ -70,8 +45,8 @@ export default function About() {
               About <span className="text-primary">Gadget Hunter</span>
             </h1>
             <p className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-              We're more than just a store — we're a bridge between tech
-              enthusiasts and the future's most innovative tools.
+              We are more than just a store — we are a bridge between tech
+              enthusiasts and the future&apos;s most innovative tools.
             </p>
           </motion.div>
         </div>

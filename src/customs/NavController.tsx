@@ -25,7 +25,7 @@ export default function NavController() {
   );
 
   return (
-    <div className="flex-1 flex items-center justify-end gap-2">
+    <div className="flex items-center justify-end gap-1 md:gap-2">
       <SearchPopup />
       <ThemeToggler />
       

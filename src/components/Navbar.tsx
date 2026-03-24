@@ -15,21 +15,12 @@ export const navLink = [
   { name: "Contact", href: "/contact" },
 ];
 
-/**
- * Navbar Component
- * 
- * The main navigation bar for the application.
- * Handles responsive navigation, mobile drawer, and link rendering.
- * 
- * @returns {JSX.Element} The rendered Navbar component
- */
 export default function Navbar() {
   return (
     <nav className="w-full h-14 fixed top-0 left-0 z-100 border-b border-base-300 flex items-center justify-center px-4 md:px-10 lg:px-20 bg-base-100 shadow-xs">
-      {/* Desktop Navigation Section */}
-      <section className="w-full hidden lg:flex items-center justify-between bg-base-100 h-full">
-        <SiteTitle className="flex-1" />
-        <div className="flex-5 flex items-center justify-center gap-4">
+      <section className="w-full flex items-center justify-between gap-1 md:gap-2 bg-base-100 h-full">
+        <SiteTitle className="flex-1 lg:flex-none h-8 text-sm md:text-lg lg:text-xl" />
+        <div className="hidden lg:flex-1 lg:flex items-center justify-center gap-4">
           {navLink.map((link) => (
             <Link
               key={link.name}
@@ -41,28 +32,22 @@ export default function Navbar() {
           ))}
         </div>
         <NavController />
-      </section>
-
-      {/* Mobile Section */}
-      <section className="w-full h-full flex lg:hidden items-center justify-between gap-2 bg-base-100">
-        <SiteTitle className="flex-1 text-xl" />
-
-        <NavController />
-
-        <Drawer
-          label={<IconButton icon={<IoMenu />} />}
-          labelClose={<IconButton icon={<IoClose />} />}
-          className="bg-base-100 text-base-content"
-        >
-          <div className="flex flex-col gap-3 items-end text-2xl tracking-[2px] uppercase py-4 px-6">
-            {navLink.map((link) => (
-              <Link key={link.name} href={link.href}>
-                {link.name}
-              </Link>
-            ))}
-            <Link href="/dashboard">Dashboard</Link>
-          </div>
-        </Drawer>
+        <div className="flex lg:hidden">
+          <Drawer
+            label={<IconButton icon={<IoMenu />} />}
+            labelClose={<IconButton icon={<IoClose />} />}
+            className="bg-base-100 text-base-content"
+          >
+            <div className="flex flex-col gap-3 items-end text-2xl tracking-[2px] uppercase py-4 px-6">
+              {navLink.map((link) => (
+                <Link key={link.name} href={link.href}>
+                  {link.name}
+                </Link>
+              ))}
+              <Link href="/dashboard">Dashboard</Link>
+            </div>
+          </Drawer>
+        </div>
       </section>
     </nav>
   );

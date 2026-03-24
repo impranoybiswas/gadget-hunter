@@ -11,7 +11,7 @@ interface ContainerProps {
 
 /**
  * Professional Container Component
- * 
+ *
  * Features:
  * - Consistent responsive padding and spacing
  * - Optional entrance animation for the whole page/container
@@ -20,17 +20,19 @@ interface ContainerProps {
 export default function Container({
   children,
   className = "",
-  animate = false
+  animate = false,
 }: ContainerProps) {
   const content = (
-    <main className={`
+    <main
+      className={`
       flex min-h-screen w-full flex-col items-center 
       gap-10 md:gap-12 lg:gap-16 
       pt-24 lg:pt-32 pb-20 
       px-4 md:px-10 lg:px-20 
       max-w-[1920px] mx-auto
       ${className}
-    `}>
+    `}
+    >
       {children}
     </main>
   );

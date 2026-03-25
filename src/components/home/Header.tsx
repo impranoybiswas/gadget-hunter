@@ -63,7 +63,7 @@ export default function Header() {
                   loop
                   playsInline
                   preload="metadata"
-                  className="w-full h-auto"
+                  className="w-full h-full object-cover"
                   poster={data.image}
                 >
                   <source src={data.video} type="video/mp4" />

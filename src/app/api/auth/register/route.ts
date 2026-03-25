@@ -5,14 +5,15 @@ import { formattedDate } from "@/utilities/MyFormat";
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, gender, image, password } = await request.json();
+    const { name, email, gender, image, password, phone } =
+      await request.json();
 
     const users = await getUsersCollection();
     const existUser = await users.findOne({ email });
     if (existUser) {
       return NextResponse.json(
         { error: "User already exists" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -25,6 +26,7 @@ export async function POST(request: NextRequest) {
       password: hashedPassword,
       image,
       gender,
+      phone,
       role: "user",
       createdAt: formattedDate(),
       lastSignInAt: formattedDate(),
@@ -32,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { message: "User registered successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error creating user:", error);

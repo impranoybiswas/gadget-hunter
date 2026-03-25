@@ -15,7 +15,7 @@ interface DropDownProps {
  * Features:
  * - Animated entrance/exit via AnimatePresence
  * - Click-outside detection to close
- * - Glassmorphism UI
+ * - Glass morphs UI
  * - Refined shadows and positioning
  */
 export default function DropDown({ label, children, className = "" }: DropDownProps) {
@@ -50,7 +50,7 @@ export default function DropDown({ label, children, className = "" }: DropDownPr
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
             className={`
-              absolute right-0 mt-2 z-[60] min-w-[200px]
+              absolute right-0 mt-2 z-[60] min-w-[220px]
               bg-base-100/90 backdrop-blur-xl
               border border-base-content/5
               rounded-2xl shadow-2xl p-2 flex flex-col gap-1

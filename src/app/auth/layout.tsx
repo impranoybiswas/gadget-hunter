@@ -29,7 +29,7 @@ export default function AuthLayout({
 
   if (status === "loading") return <Loading />;
   return (
-    <main className="w-full min-h-dvh grid grid-cols-1 md:grid-cols-2 pt-20">
+    <main className="w-full min-h-dvh grid grid-cols-1 md:grid-cols-2 pt-14">
       {/* Video Background */}
 
       <video
@@ -48,7 +48,7 @@ export default function AuthLayout({
       {/* Gradient Overlay for better text readability */}
       <div className="absolute z-6 inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-      <div className="w-full h-60 md:h-full z-10 flex justify-center md:justify-start items-end pl-0 md:pl-10 lg:pl-20 pb-10">
+      <div className="w-full h-60 md:h-full max-h-lg z-10 flex justify-center md:justify-start items-end pl-0 md:pl-10 lg:pl-20 pb-10">
         {/* Branding Content */}
         <div className="relative z-10 text-white flex flex-col justify-center items-center md:items-start mx-auto md:mx-0 ">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-6 tracking-tighter drop-shadow-2xl">
@@ -62,8 +62,8 @@ export default function AuthLayout({
         </div>
       </div>
 
-      <div className=" w-full h-full z-10 pt-5 pb-15">
-        <div className="flex flex-col items-center bg-gradient-to-br from-base-100 via-base-100 to-primary/10 w-11/12 max-w-lg mx-auto h-full border-px border-base-200 shadow rounded-xl py-10 ">
+      <div className=" w-full h-full py-10 z-10">
+        <div className="flex flex-col items-center bg-gradient-to-br from-base-100 via-base-100 to-primary/10 w-11/12 max-w-lg mx-auto max-h-lg border-px border-base-200 shadow rounded-xl py-10 ">
           <div className="mb-10 flex flex-col items-center justify-center">
             <h2 className="text-4xl font-bold mb-3 tracking-tight text-base-content">
               {isRegister ? "Create Account" : "Welcome Back"}

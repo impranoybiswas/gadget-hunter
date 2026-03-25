@@ -88,7 +88,7 @@ export const UserAvatar = () => {
       label={
         <IconButton
           icon={
-            <Image className="object-cover" src={currentUser.image || "./assets/placeholder-profile.svg"} alt="avatar" width={100} height={100} />
+            <Image className="object-cover" src={currentUser.image && currentUser.image?.length > 0 ? currentUser.image : "./assets/placeholder-profile.svg"} alt="avatar" width={100} height={100} />
           }
         />
       }

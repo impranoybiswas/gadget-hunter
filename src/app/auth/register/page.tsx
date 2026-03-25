@@ -1,12 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { signIn, useSession } from "next-auth/react";
 
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { ImageUpload } from "@/customs/ImageUpload";
 import Loading from "@/app/loading";
 import Button from "@/ui/Button";
 import toast from "react-hot-toast";
@@ -18,6 +17,7 @@ type RegisterFormData = {
   confirmPassword: string;
   gender: string;
   image: string; // URL from ImageUpload
+  phone: string;
 };
 
 export default function RegisterPage() {
@@ -30,7 +30,6 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     watch,
-    control,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>();
 
@@ -52,7 +51,15 @@ export default function RegisterPage() {
   const passwordValue = watch("password");
 
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
-    const { name, email, password, confirmPassword, gender = "", image = "" } = data;
+    const {
+      name,
+      email,
+      password,
+      confirmPassword,
+      gender = "",
+      image = "",
+      phone = "",
+    } = data;
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
@@ -69,7 +76,7 @@ export default function RegisterPage() {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, gender, image }),
+        body: JSON.stringify({ name, email, password, gender, image, phone }),
       });
 
       if (res.ok) {
@@ -126,51 +133,22 @@ export default function RegisterPage() {
         )}
       </div>
 
-      {/* Image Upload & Gender Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 items-end">
-        <div className="group">
-          <Controller
-            name="image"
-            control={control}
-            defaultValue=""
-            rules={{ required: false }}
-            render={({ field }) => (
-              <ImageUpload
-                folder="users"
-                label="Profile Photo"
-                imageUrl={field.value || null}
-                onUploadSuccess={(url) => field.onChange(url)}
-                className="transition-all"
-              />
-            )}
-          />
-          {errors.image && (
-            <p className="text-xs text-error mt-2 ml-1 font-medium">
-              {errors.image.message}
-            </p>
-          )}
-        </div>
-
-        {/* Gender */}
-        <div className="group pb-1">
-          <label className="text-sm font-semibold mb-2 block ml-1 text-base-content/70">
-            Gender
-          </label>
-          <select
-            {...register("gender", { required: false })}
-            className="form-input appearance-none bg-base-100"
-          >
-            <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-          {errors.gender && (
-            <p className="text-xs text-error mt-2 ml-1 font-medium">
-              {errors.gender.message}
-            </p>
-          )}
-        </div>
+      {/* Phone */}
+      <div className="group">
+        <label className="text-sm font-semibold mb-2 block ml-1 text-base-content/70">
+          Phone Number
+        </label>
+        <input
+          type="tel"
+          placeholder="+1 234 567 890"
+          {...register("phone", { required: "Phone number is required" })}
+          className="form-input"
+        />
+        {errors.phone && (
+          <p className="text-xs text-error mt-2 ml-1 font-medium">
+            {errors.phone.message}
+          </p>
+        )}
       </div>
 
       {/* Password Grid */}

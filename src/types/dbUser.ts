@@ -10,6 +10,7 @@ export interface DBUser extends Document {
   provider: string;
   image?: string;
   gender?: string;
+  phone?: string;
   role: string;
   createdAt: string;
   lastSignInAt?: string;

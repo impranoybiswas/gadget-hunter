@@ -3,22 +3,24 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useUserData } from "@/hooks/useUserData";
+import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Button from "@/ui/Button";
 import axiosApi from "@/libs/axiosInstance";
 import { ImageUpload } from "@/customs/ImageUpload";
 import { motion } from "framer-motion";
-import { FaImage, FaUser, FaVenusMars } from "react-icons/fa";
-
+import { FaImage, FaPhone, FaUser, FaVenusMars } from "react-icons/fa";
 
 type ProfileFormValues = {
   name: string;
   gender: string;
   image: string;
+  phone: string;
 };
 
 export default function EditProfilePage() {
   const { currentUser } = useUserData();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -32,6 +34,7 @@ export default function EditProfilePage() {
       name: "",
       gender: "",
       image: "",
+      phone: "",
     },
   });
 
@@ -43,6 +46,7 @@ export default function EditProfilePage() {
         name: currentUser.name || "",
         gender: currentUser.gender || "",
         image: currentUser.image || "",
+        phone: currentUser.phone || "",
       });
     }
   }, [currentUser, reset]);
@@ -50,6 +54,7 @@ export default function EditProfilePage() {
   const onSubmit = async (data: ProfileFormValues) => {
     try {
       await axiosApi.patch(`/user`, data);
+      queryClient.invalidateQueries({ queryKey: ["current-user"] });
       toast.success("Profile updated successfully!");
     } catch (err: unknown) {
       console.error("Profile update failed:", err);
@@ -77,7 +82,7 @@ export default function EditProfilePage() {
         </div>
 
         {/* Form Fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Name Field */}
           <motion.div
             className="flex flex-col"
@@ -122,6 +127,26 @@ export default function EditProfilePage() {
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
+          </motion.div>
+          {/* Phone Field */}
+          <motion.div
+            className="flex flex-col"
+            whileHover={{ scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            <label
+              htmlFor="phone"
+              className="flex items-center gap-2 text-sm font-medium text-base-content/80 mb-2"
+            >
+              <FaPhone size={16} className="text-accent" /> Phone Number
+            </label>
+            <input
+              id="phone"
+              type="tel"
+              {...register("phone")}
+              placeholder="Enter your phone number"
+              className="rounded-lg border border-base-content/10 bg-base-100 focus:ring-2 focus:ring-primary focus:border-primary p-2.5 outline-none transition placeholder:text-base-content/30 text-base-content"
+            />
           </motion.div>
         </div>
 

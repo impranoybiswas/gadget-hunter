@@ -9,6 +9,7 @@ import {
   FaVenusMars,
   FaUserShield,
   FaCalendarAlt,
+  FaPhone,
 } from "react-icons/fa";
 import { format, parseISO } from "date-fns";
 
@@ -35,7 +36,7 @@ export default function ProfilePage() {
     );
   }
 
-  const { name, email, gender, image, role, createdAt, lastSignInAt } =
+  const { name, email, gender, image, role, createdAt, lastSignInAt, phone } =
     currentUser;
 
   // Safely format dates using date-fns
@@ -85,6 +86,12 @@ export default function ProfilePage() {
             label="Gender"
             value={gender || "N/A"}
           />
+          {/* Phone */}
+          <ProfileItem
+            icon={<FaPhone className="text-accent" />}
+            label="Phone"
+            value={phone || "N/A"}
+          />
 
           {/* Role */}
           <ProfileItem
@@ -125,7 +132,9 @@ function ProfileItem({ icon, label, value }: ProfileItemProps) {
       <div className="text-xl">{icon}</div>
       <div>
         <p className="text-sm text-base-content/50">{label}</p>
-        <p className="text-base font-medium text-base-content">{value}</p>
+        <p className="text-base font-medium text-base-content capitalize">
+          {value}
+        </p>
       </div>
     </div>
   );

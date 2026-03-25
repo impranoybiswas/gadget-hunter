@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { CgSearch } from "react-icons/cg";
 import { FiX, FiPackage, FiGrid, FiBookOpen, FiLink } from "react-icons/fi";
 import { useGetItems } from "@/hooks/useItems";
 import { useGetBlogs } from "@/hooks/useBlogs";
@@ -11,6 +10,7 @@ import { categories } from "@/utilities/Categories";
 import { navLink } from "@/components/Navbar";
 import IconButton from "@/ui/IconButton";
 import Image from "next/image";
+import { IoIosSearch } from "react-icons/io";
 
 function useDebounce(value: string, delay: number) {
   const [debounced, setDebounced] = useState(value);
@@ -91,7 +91,7 @@ export default function SearchPopup() {
     <>
       {/* Trigger button */}
       <div onClick={() => setOpen(true)}>
-        <IconButton icon={<CgSearch />} />
+        <IconButton icon={<IoIosSearch />} />
       </div>
 
       {/* Overlay */}
@@ -117,7 +117,7 @@ export default function SearchPopup() {
             >
               {/* Search Input */}
               <div className="flex items-center gap-3 px-4 py-3.5 border-b border-base-content/8">
-                <CgSearch className="text-base-content/40 text-xl shrink-0" />
+                <IoIosSearch className="text-base-content/40 text-xl shrink-0" />
                 <input
                   ref={inputRef}
                   value={query}
@@ -142,7 +142,7 @@ export default function SearchPopup() {
               <div className="max-h-[60vh] overflow-y-auto p-2">
                 {!hasQuery && (
                   <div className="py-10 text-center">
-                    <CgSearch className="mx-auto text-3xl text-base-content/20 mb-2" />
+                    <IoIosSearch className="mx-auto text-3xl text-base-content/20 mb-2" />
                     <p className="text-sm text-base-content/40">
                       Start typing to search across all content
                     </p>

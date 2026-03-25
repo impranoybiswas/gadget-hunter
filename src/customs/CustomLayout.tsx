@@ -17,8 +17,8 @@ import AiChatbot from "@/components/AiChatbot";
 
 export default function CustomLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const hideLayout =
-    pathname.startsWith("/auth") || pathname.startsWith("/dashboard");
+  const authLayout = pathname.startsWith("/auth");
+  const dashboardLayout = pathname.startsWith("/dashboard");
 
   return (
     <ThemeProvider>
@@ -28,11 +28,11 @@ export default function CustomLayout({ children }: { children: ReactNode }) {
           <FavoriteSync />
           <ScrollProvider>
             <Toaster />
-            {hideLayout || <Navbar />}
+            {!dashboardLayout && <Navbar />}
             {children}
             <GoToTop />
             <AiChatbot />
-            {hideLayout || <Footer />}
+            {authLayout || dashboardLayout || <Footer />}
           </ScrollProvider>
         </QueryProvider>
       </SessionProvider>

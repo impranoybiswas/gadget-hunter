@@ -11,8 +11,8 @@ import IconButton from "@/ui/IconButton";
 export default function Navbar() {
   const { currentUser, isLoading } = useUserData();
   return (
-    <nav className="fixed top-0 right-0 w-full h-16 flex items-center gap-3 bg-base-300 border-b border-base-content/10 text-base-content p-4 z-50">
-      <SiteTitle className="flex-1 text-xl" />
+    <nav className="fixed top-0 right-0 w-full h-16 flex items-center  gap-3 bg-base-300 border-b border-base-content/10 text-base-content p-4 z-50">
+      <SiteTitle className="h-10 flex-grow" />
 
       <div className="h-9 w-9 md:h-10 md:w-fit md:px-1 flex overflow-hidden items-center justify-center rounded-xl 
         border border-base-content/10
@@ -23,7 +23,7 @@ export default function Navbar() {
         ) : (
           <>
             <Image
-              src={currentUser?.image || "./assets/placeholder-profile.svg"}
+              src={currentUser?.image || "/assets/placeholder-profile.svg"}
               alt="avatar"
               width={100}
               height={100}

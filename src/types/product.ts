@@ -26,6 +26,7 @@ export interface BannerItem {
   subtitle: string;
   image: string;
   link: string;
+  video: string;
 }
 
 export interface Payment {

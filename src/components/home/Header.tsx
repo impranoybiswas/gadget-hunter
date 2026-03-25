@@ -40,7 +40,7 @@ export default function Header() {
             slidesPerView={1}
             navigation={true}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 3500, disableOnInteraction: false }}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
             loop
             className="w-full h-full"
           >
@@ -49,13 +49,25 @@ export default function Header() {
                 key={index}
                 className="relative w-full h-full overflow-hidden"
               >
-                <Image
+                {/* <Image
                   src={data.image}
                   alt={data.title}
                   fill
                   priority
                   className="object-cover transition-transform duration-700 hover:scale-105"
-                />
+                /> */}
+
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-auto"
+                  poster={data.image}
+                >
+                  <source src={data.video} type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 w-full p-8 md:p-10 text-white z-10 space-y-3">
                   <p className="text-xs font-bold uppercase tracking-widest text-white/60">

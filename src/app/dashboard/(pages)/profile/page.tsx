@@ -52,7 +52,7 @@ export default function ProfilePage() {
       {/* Profile Image */}
       <div className="flex-shrink-0 relative w-full h-44 md:w-44 md:h-44 mb-5 md:mb-0">
         <Image
-          src={image || "/assets/placeholder-profile.svg"}
+          src={image || "./assets/placeholder-profile.svg"}
           alt={name || "User avatar"}
           fill
           className="rounded-2xl object-cover border border-base-content/10"

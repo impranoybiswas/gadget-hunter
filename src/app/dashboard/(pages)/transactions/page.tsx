@@ -4,15 +4,18 @@ import { useGetPayments } from "@/hooks/usePayments";
 import { useUserData } from "@/hooks/useUserData";
 import { format } from "date-fns";
 import { useGetItem } from "@/hooks/useItems";
+import Link from "next/link";
 
 export default function Transactions() {
   const { currentUser, isLoading: userLoading } = useUserData();
   const { data: payments, isLoading } = useGetPayments(
-    currentUser?.email ? { email: currentUser.email } : undefined
+    currentUser?.email ? { email: currentUser.email } : undefined,
   );
 
   if (userLoading || isLoading) {
-    return <p className="text-base-content/40 text-sm">Loading transactions...</p>;
+    return (
+      <p className="text-base-content/40 text-sm">Loading transactions...</p>
+    );
   }
 
   if (!payments || payments.length === 0) {
@@ -29,12 +32,16 @@ export default function Transactions() {
               <th className="px-4 py-3">Items</th>
               <th className="px-4 py-3 text-right">Amount</th>
               <th className="px-4 py-3">Paid At</th>
+              <th className="px-4 py-3 text-right">Receipt</th>
             </tr>
           </thead>
 
           <tbody>
             {payments.map((payment) => (
-              <tr key={payment.tranId} className="hover:bg-base-200/50 transition border-t border-base-content/5 first:border-t-0">
+              <tr
+                key={payment.tranId}
+                className="hover:bg-base-200/50 transition border-t border-base-content/5 first:border-t-0"
+              >
                 <td className="px-4 py-3 font-mono text-xs text-base-content/60">
                   {payment.tranId}
                 </td>
@@ -53,6 +60,15 @@ export default function Transactions() {
                   {payment.paidAt
                     ? format(new Date(payment.paidAt), "dd MMM yyyy, hh:mm a")
                     : "-"}
+                </td>
+
+                <td className="px-4 py-3 text-right">
+                  <Link
+                    href={`/success?tranId=${payment.tranId}`}
+                    className="btn btn-xs btn-outline btn-primary rounded-lg font-medium"
+                  >
+                    View Receipt
+                  </Link>
                 </td>
               </tr>
             ))}

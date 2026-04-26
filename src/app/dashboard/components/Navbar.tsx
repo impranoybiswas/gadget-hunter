@@ -25,7 +25,7 @@ export default function Navbar() {
         ) : (
           <>
             <Image
-              src={currentUser?.image || "/assets/placeholder-profile.svg"}
+              src={currentUser?.image || "./assets/placeholder-profile.svg"}
               alt="avatar"
               width={100}
               height={100}

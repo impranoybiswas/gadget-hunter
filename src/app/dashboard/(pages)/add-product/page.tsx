@@ -32,6 +32,8 @@ type ProductFormValues = {
   description: string;
 };
 
+import ProtectedLayout from "@/customs/ProtectedLayout";
+
 export default function AddProduct() {
   const { register, handleSubmit, reset } = useForm<ProductFormValues>();
   const addProduct = useAddItem();
@@ -90,198 +92,201 @@ export default function AddProduct() {
     "input input-bordered w-full bg-base-200/40 focus:input-primary border-base-content/10 transition-all duration-200";
 
   return (
-    <section className="w-full mx-auto py-4">
-      {/* Form */}
-      <motion.form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-base-100/60 backdrop-blur-xl border border-base-content/10 shadow-md rounded-2xl p-6 sm:p-10 space-y-10"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        {/* Section 1: Basic Information */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
-            <FiInfo className="text-primary" />
-            <h2 className="text-lg font-bold">General Information</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-1">
-              <label className={fieldLabelClass}>
-                <FiPackage className="text-primary/70" /> Product Name
-              </label>
-              <input
-                {...register("name", { required: true })}
-                placeholder="e.g. Google Pixel 9 Pro"
-                className={inputClass}
-              />
+    <ProtectedLayout protectedFor="admin">
+      <section className="w-full mx-auto py-4">
+        {/* Form */}
+        <motion.form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-base-100/60 backdrop-blur-xl border border-base-content/10 shadow-md rounded-2xl p-6 sm:p-10 space-y-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          {/* Section 1: Basic Information */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
+              <FiInfo className="text-primary" />
+              <h2 className="text-lg font-bold">General Information</h2>
             </div>
 
-            <div className="space-y-1">
-              <label className={fieldLabelClass}>
-                <FiBriefcase className="text-primary/70" /> Brand Name
-              </label>
-              <input
-                {...register("brand", { required: true })}
-                placeholder="e.g. Google"
-                className={inputClass}
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className={fieldLabelClass}>
-                <FiLayers className="text-primary/70" /> Category
-              </label>
-              <select
-                {...register("category", { required: true })}
-                className={`${inputClass} select select-bordered`}
-                defaultValue=""
-              >
-                <option value="" disabled>
-                  Select Category...
-                </option>
-                {categories.map((cat) => (
-                  <option key={cat.name} value={cat.name}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="space-y-1">
-              <label className={fieldLabelClass}>
-                <FiShield className="text-primary/70" /> Warranty Info
-              </label>
-              <input
-                {...register("warranty")}
-                placeholder="e.g. 1 Year Local Warranty"
-                className={inputClass}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Section 2: Inventory & Pricing */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
-            <FiDollarSign className="text-primary" />
-            <h2 className="text-lg font-bold">Pricing & Stock</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-1">
-              <label className={fieldLabelClass}>
-                <FiDollarSign className="text-primary/70" /> Price (BDT)
-              </label>
-              <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-1">
+                <label className={fieldLabelClass}>
+                  <FiPackage className="text-primary/70" /> Product Name
+                </label>
                 <input
-                  {...register("price", {
+                  {...register("name", { required: true })}
+                  placeholder="e.g. Google Pixel 9 Pro"
+                  className={inputClass}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className={fieldLabelClass}>
+                  <FiBriefcase className="text-primary/70" /> Brand Name
+                </label>
+                <input
+                  {...register("brand", { required: true })}
+                  placeholder="e.g. Google"
+                  className={inputClass}
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className={fieldLabelClass}>
+                  <FiLayers className="text-primary/70" /> Category
+                </label>
+                <select
+                  {...register("category", { required: true })}
+                  className={`${inputClass} select select-bordered`}
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select Category...
+                  </option>
+                  {categories.map((cat) => (
+                    <option key={cat.name} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className={fieldLabelClass}>
+                  <FiShield className="text-primary/70" /> Warranty Info
+                </label>
+                <input
+                  {...register("warranty")}
+                  placeholder="e.g. 1 Year Local Warranty"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Inventory & Pricing */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
+              <FiDollarSign className="text-primary" />
+              <h2 className="text-lg font-bold">Pricing & Stock</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-1">
+                <label className={fieldLabelClass}>
+                  <FiDollarSign className="text-primary/70" /> Price (BDT)
+                </label>
+                <div className="relative">
+                  <input
+                    {...register("price", {
+                      required: true,
+                      valueAsNumber: true,
+                    })}
+                    type="number"
+                    placeholder="0.00"
+                    className={`${inputClass} pl-10`}
+                  />
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base-content/40 font-bold">
+                    ৳
+                  </span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className={fieldLabelClass}>
+                  <FiTag className="text-primary/70" /> Stock Quantity
+                </label>
+                <input
+                  {...register("quantity", {
                     required: true,
                     valueAsNumber: true,
                   })}
                   type="number"
-                  placeholder="0.00"
-                  className={`${inputClass} pl-10`}
+                  placeholder="Available units"
+                  className={inputClass}
                 />
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base-content/40 font-bold">
-                  ৳
-                </span>
               </div>
             </div>
+          </div>
 
+          {/* Section 3: Description */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
+              <FiInfo className="text-primary" />
+              <h2 className="text-lg font-bold">Product Details</h2>
+            </div>
             <div className="space-y-1">
               <label className={fieldLabelClass}>
-                <FiTag className="text-primary/70" /> Stock Quantity
+                Comprehensive Description
               </label>
-              <input
-                {...register("quantity", {
-                  required: true,
-                  valueAsNumber: true,
-                })}
-                type="number"
-                placeholder="Available units"
-                className={inputClass}
+              <textarea
+                {...register("description")}
+                placeholder="Describe the key features, specifications, and what makes this gadget stand out..."
+                className="textarea textarea-bordered w-full bg-base-200/40 focus:textarea-primary border-base-content/10 min-h-[160px] transition-all text-base"
               />
             </div>
           </div>
 
-          
-        </div>
+          {/* Section 4: Image Upload */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
+              <FiImage className="text-primary" />
+              <h2 className="text-lg font-bold">Product Showcase</h2>
+            </div>
+            <p className="text-xs text-base-content/50 -mt-4">
+              High-quality images attract 3x more customers. (Minimum 1
+              Required)
+            </p>
 
-        {/* Section 3: Description */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
-            <FiInfo className="text-primary" />
-            <h2 className="text-lg font-bold">Product Details</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="group transition-all duration-300">
+                  <ImageUpload
+                    folder="gadget_hunters/products"
+                    label={`Gallery View ${i + 1}`}
+                    imageUrl={images[i] || "/assets/placeholder-image.svg"}
+                    onUploadSuccess={(url) => handleImageUpload(url, i)}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="space-y-1">
-            <label className={fieldLabelClass}>Comprehensive Description</label>
-            <textarea
-              {...register("description")}
-              placeholder="Describe the key features, specifications, and what makes this gadget stand out..."
-              className="textarea textarea-bordered w-full bg-base-200/40 focus:textarea-primary border-base-content/10 min-h-[160px] transition-all text-base"
+
+          {/* Submit Button */}
+          <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-end border-t border-base-content/5">
+            <Button
+              type="button"
+              label="Reset Form"
+              isOutline
+              isLarge
+              onClick={() => {
+                reset();
+                setImages(["", "", ""]);
+              }}
+            />
+
+            <Button
+              type="submit"
+              leftIcon={
+                loading || addProduct.status === "pending" ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  <FiPlus />
+                )
+              }
+              label={
+                loading || addProduct.status === "pending"
+                  ? "Adding Gadget..."
+                  : "List Product"
+              }
+              isLarge
+              isOutline={false}
+              disabled={loading || addProduct.status === "pending"}
             />
           </div>
-        </div>
-
-        {/* Section 4: Image Upload */}
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 border-b border-base-content/5 pb-2">
-            <FiImage className="text-primary" />
-            <h2 className="text-lg font-bold">Product Showcase</h2>
-          </div>
-          <p className="text-xs text-base-content/50 -mt-4">
-            High-quality images attract 3x more customers. (Minimum 1 Required)
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="group transition-all duration-300">
-                <ImageUpload
-                  folder="gadget_hunters/products"
-                  label={`Gallery View ${i + 1}`}
-                  imageUrl={images[i] || "/assets/placeholder-image.svg"}
-                  onUploadSuccess={(url) => handleImageUpload(url, i)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Submit Button */}
-        <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-end border-t border-base-content/5">
-          <Button
-            type="button"
-            label="Reset Form"
-            isOutline
-            isLarge
-            onClick={() => {
-              reset();
-              setImages(["", "", ""]);
-            }}
-          />
-
-          <Button
-            type="submit"
-            leftIcon={
-              loading || addProduct.status === "pending" ? (
-                <span className="loading loading-spinner loading-sm"></span>
-              ) : (
-                <FiPlus />
-              )
-            }
-            label={
-              loading || addProduct.status === "pending"
-                ? "Adding Gadget..."
-                : "List Product"
-            }
-            isLarge
-            isOutline={false}
-            disabled={loading || addProduct.status === "pending"}
-          />
-        </div>
-      </motion.form>
-    </section>
+        </motion.form>
+      </section>
+    </ProtectedLayout>
   );
 }

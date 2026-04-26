@@ -2,11 +2,15 @@
 
 import React from "react";
 import { useStatesNumber } from "@/hooks/useStatesNumber";
+import { useUserData } from "@/hooks/useUserData";
+import { useAdminStats } from "@/hooks/useAdmin";
 import {
   FaBoxOpen,
   FaShoppingCart,
   FaHeart,
-  FaTags,
+  FaUsers,
+  FaMoneyBillWave,
+  FaHistory,
 } from "react-icons/fa";
 import {
   PieChart,
@@ -24,68 +28,115 @@ import {
 /** =========================
  * ✅ Number Formatter (for large values like 1.2K, 3.5M)
  ========================= */
-const formatNumber = (num: number) => {
-  if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
-  if (num >= 1_000) return (num / 1_000).toFixed(1) + "K";
-  return num.toString();
+const formatNumber = (num: number, isPrice: boolean = false) => {
+  let formatted = num.toString();
+  if (num >= 1_000_000) formatted = (num / 1_000_000).toFixed(1) + "M";
+  else if (num >= 1_000) formatted = (num / 1_000).toFixed(1) + "K";
+
+  return isPrice ? `BDT ${formatted}` : formatted;
 };
 
 export default function DashboardHome() {
-  const { totalProducts, totalCarts, totalFavorites, totalCategories } =
+  const { currentUser } = useUserData();
+  const isAdmin = currentUser?.role === "admin";
+
+  const { totalCarts, totalFavorites, totalSpent, totalOrders } =
     useStatesNumber();
+
+  const { data: adminStats } = useAdminStats();
 
   /** =========================
    * 📊 Chart Data
    ========================= */
-  const pieData = [
-    { name: "Products", value: totalProducts },
-    { name: "Carts", value: totalCarts },
-    { name: "favorites", value: totalFavorites },
-  ];
+  const pieData = isAdmin
+    ? [
+        { name: "Products", value: adminStats?.totalProducts || 0 },
+        { name: "Users", value: adminStats?.totalUsers || 0 },
+        { name: "Categories", value: adminStats?.totalCategories || 0 },
+      ]
+    : [
+        { name: "Carts", value: totalCarts },
+        { name: "Favorites", value: totalFavorites },
+        { name: "Orders", value: totalOrders },
+      ];
+
   const pieColors = ["#4f46e5", "#16a34a", "#e11d48"];
 
   const barData = [
-    { month: "Jan", products: 30 },
-    { month: "Feb", products: 45 },
-    { month: "Mar", products: 60 },
-    { month: "Apr", products: 40 },
-    { month: "May", products: 75 },
-    { month: "Jun", products: 90 },
+    { month: "Jan", value: 30 },
+    { month: "Feb", value: 45 },
+    { month: "Mar", value: 60 },
+    { month: "Apr", value: 40 },
+    { month: "May", value: 75 },
+    { month: "Jun", value: 90 },
   ];
 
   /** =========================
    * 📦 State Summary Data
    ========================= */
-  const stateCards = [
-    {
-      name: "Total Products",
-      value: totalProducts,
-      icon: <FaBoxOpen size={26} />,
-      color: "bg-indigo-100 text-indigo-600",
-      growth: "+12%",
-    },
-    {
-      name: "Carts",
-      value: totalCarts,
-      icon: <FaShoppingCart size={26} />,
-      color: "bg-green-100 text-green-600",
-      growth: "+8%",
-    },
-    {
-      name: "favorites",
-      value: totalFavorites,
-      icon: <FaHeart size={26} />,
-      color: "bg-pink-100 text-pink-600",
-      growth: "+5%",
-    },
-    {
-      name: "Categories",
-      value: totalCategories,
-      icon: <FaTags size={26} />,
-      color: "bg-yellow-100 text-yellow-600",
-      growth: "+3%",
-    },
-  ];
+  const stateCards = isAdmin
+    ? [
+        {
+          name: "Total Products",
+          value: adminStats?.totalProducts || 0,
+          icon: <FaBoxOpen size={26} />,
+          color: "bg-indigo-100 text-indigo-600",
+          growth: adminStats?.totalProducts ? "In Catalog" : "Empty",
+        },
+        {
+          name: "Total Stock",
+          value: adminStats?.totalStock || 0,
+          icon: <FaBoxOpen size={26} />,
+          color: "bg-pink-100 text-pink-600",
+          growth: "Total Units",
+        },
+        {
+          name: "Total Users",
+          value: adminStats?.totalUsers || 0,
+          icon: <FaUsers size={26} />,
+          color: "bg-blue-100 text-blue-600",
+          growth: "Registered",
+        },
+        {
+          name: "Total Revenue",
+          value: adminStats?.totalRevenue || 0,
+          icon: <FaMoneyBillWave size={26} />,
+          color: "bg-green-100 text-green-600",
+          growth: "All Time",
+          isPrice: true,
+        },
+      ]
+    : [
+        {
+          name: "Cart Items",
+          value: totalCarts,
+          icon: <FaShoppingCart size={26} />,
+          color: "bg-indigo-100 text-indigo-600",
+          growth: "+2",
+        },
+        {
+          name: "Favorites",
+          value: totalFavorites,
+          icon: <FaHeart size={26} />,
+          color: "bg-pink-100 text-pink-600",
+          growth: "+1",
+        },
+        {
+          name: "Money Spent",
+          value: totalSpent,
+          icon: <FaMoneyBillWave size={26} />,
+          color: "bg-green-100 text-green-600",
+          growth: "+15%",
+          isPrice: true,
+        },
+        {
+          name: "Total Orders",
+          value: totalOrders,
+          icon: <FaHistory size={26} />,
+          color: "bg-blue-100 text-blue-600",
+          growth: "+1",
+        },
+      ];
 
   return (
     <section className="space-y-8">
@@ -110,7 +161,7 @@ export default function DashboardHome() {
             <div>
               <p className="text-base-content/50 text-sm">{card.name}</p>
               <p className="text-3xl font-bold text-base-content mt-1">
-                {formatNumber(card.value)}
+                {formatNumber(card.value, card.isPrice)}
               </p>
             </div>
           </div>
@@ -124,7 +175,7 @@ export default function DashboardHome() {
         {/* Pie Chart */}
         <div className="bg-base-100 p-6 rounded-xl shadow-md border border-base-content/10">
           <h3 className="text-lg font-semibold mb-4 text-base-content/80">
-            Distribution Overview
+            {isAdmin ? "Admin Overview" : "Your Activity"}
           </h3>
           <ResponsiveContainer width="100%" height={260}>
             <PieChart>
@@ -153,7 +204,7 @@ export default function DashboardHome() {
         {/* Bar Chart */}
         <div className="bg-base-100 p-6 rounded-xl shadow-md border border-base-content/10">
           <h3 className="text-lg font-semibold mb-4 text-base-content/80">
-            Monthly Product Added
+            {isAdmin ? "Monthly Product Added" : "Monthly Spending"}
           </h3>
           <ResponsiveContainer width="100%" height={260}>
             <BarChart
@@ -164,7 +215,7 @@ export default function DashboardHome() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="products" fill="#4f46e5" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="value" fill="#4f46e5" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -5,6 +5,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { DBUser } from "@/types/dbUser";
 import toast from "react-hot-toast";
 import { useUserData } from "./useUserData";
+import { AxiosError } from "axios";
 
 export interface AdminStats {
   totalProducts: number;
@@ -56,7 +57,7 @@ export function useAllUsers() {
       queryClient.invalidateQueries({ queryKey: ["all-users"] });
       queryClient.invalidateQueries({ queryKey: ["admin-stats"] });
     },
-    onError: (err: any) => {
+    onError: (err: AxiosError<{ error: string }>) => {
       toast.error(err?.response?.data?.error || "Failed to update role");
     },
   });

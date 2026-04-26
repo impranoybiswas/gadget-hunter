@@ -7,6 +7,7 @@ import { FaTrash, FaBoxOpen, FaCube } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Image from "next/image";
+import { AxiosError } from "axios";
 
 export default function AllProductsPage() {
   const { data, isLoading } = useGetItems(1, "", "", "", true); // Fetch all
@@ -27,7 +28,7 @@ export default function AllProductsPage() {
           await deleteItem.mutateAsync(id);
           toast.success("Product deleted successfully");
         } catch (err: unknown) {
-          const error = err as any;
+          const error = err as AxiosError<{ error: string }>;
           toast.error(
             error?.response?.data?.error || "Failed to delete product",
           );
